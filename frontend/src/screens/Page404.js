@@ -1,7 +1,7 @@
 import React from "react";
-
+import { Empty } from "antd"; 
 function Page404() {
-  return <div>Page404</div>;
+  return <Empty  description=" Not Found" />;
 }
 
 export default Page404;

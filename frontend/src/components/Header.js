@@ -10,6 +10,10 @@ import Authorization from "../hook/Authorization";
 import { RolesEnums } from "../routes/ProtectedRoute";
 import history from "../utils/history";
 
+import { Avatar, Badge, Space } from "antd";
+
+import { cartReducer } from "../reducers/cartReducers";
+
 const Header = () => {
   const dispatch = useDispatch();
 
@@ -21,22 +25,26 @@ const Header = () => {
   };
   const handerChangeAdmin = () => {
     history.push("/admin");
-  };
-
+  }; 
+   const cart = useSelector((state) => state.cart)  
   return (
     <div>
       <header>
-        <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
+        <Navbar bg="info" variant="dark" expand="lg" collapseOnSelect>
           <Container>
             <LinkContainer to="/">
-              <Navbar.Brand>React E-Commerce</Navbar.Brand>
+              <Navbar.Brand>PTShop</Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ml-auto">
                 <LinkContainer to="/cart">
                   <Nav.Link>
-                    <i className="fa fa-shopping-cart mr-2"></i>
+                    <Space size="middle">
+                      <Badge size="small" count={cart.cartItems.length}>
+                        <i className="fa fa-shopping-cart mr-2"></i>
+                      </Badge>
+                    </Space>
                     Cart
                   </Nav.Link>
                 </LinkContainer>
@@ -59,10 +67,7 @@ const Header = () => {
                   </NavDropdown>
                 ) : (
                   <LinkContainer to="/login">
-                    <Nav.Link>
-                      <i className="fa fa-user mr-2"></i>
-                      Sign In
-                    </Nav.Link>
+                    <Nav.Link>Sign In</Nav.Link>
                   </LinkContainer>
                 )}
               </Nav>

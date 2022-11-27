@@ -6,17 +6,19 @@ const userSchema = mongoose.Schema(
         name: {
             type: String,
             required: true,
-        },
-        // We use the unique attribute to avoid having duplicate emails in the database
+        }, 
+
         email: {
             type: String,
             required: true,
             unique: true,
         },
+        
         password: {
             type: String,
             required: true,
         },
+
         isAdmin: {
             type: Boolean,
             required: true,
