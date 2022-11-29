@@ -44,8 +44,8 @@ const Footer = () => {
     <footer style={{ backgroundColor: "white" }}>
       <Container>
         <Row>
-          {footerList.map((item) => (
-            <Col span={6}>
+          {footerList.map((item, index) => (
+            <Col span={6} key={index}>
               <h4
                 style={{
                   textTransform: "uppercase",
@@ -55,8 +55,9 @@ const Footer = () => {
               >
                 {item.title}
               </h4>
-              {item.list.map((item) => (
+              {item.list.map((item, index) => (
                 <div
+                  key={index}
                   style={{
                     color: "#000",
                     display: "block",
@@ -84,7 +85,7 @@ const Footer = () => {
           borderTop: " none",
         }}
       >
-        <div style={{color: "white"}}>{copyright}</div>
+        <div style={{ color: "white" }}>{copyright}</div>
       </div>
     </footer>
   );
