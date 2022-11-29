@@ -25,8 +25,8 @@ const Header = () => {
   };
   const handerChangeAdmin = () => {
     history.push("/admin");
-  }; 
-   const cart = useSelector((state) => state.cart)  
+  };
+  const cart = useSelector((state) => state.cart);
   return (
     <div>
       <header>
