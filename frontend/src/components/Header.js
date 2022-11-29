@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 // Bootstrap UI Components
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
@@ -15,10 +15,13 @@ import { NavLink } from "react-router-dom";
 import { Avatar, Badge, Space } from "antd";
 
 import { cartReducer } from "../reducers/cartReducers";
+import { useState, useEffect } from "react";
+import { useOnClickOutside } from "../hook/useOutsideAlerter";
 
 const Header = () => {
+  const ref = useRef();
   const dispatch = useDispatch();
-
+  const [show, setShow] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -27,10 +30,15 @@ const Header = () => {
   };
   const handelChangeAdmin = () => {
     history.push("/admin");
-  }; 
-   const cart = useSelector((state) => state.cart)  
-  return (
+  };
+  const cart = useSelector((state) => state.cart);
+  const handleShowSearch = () => {
+    setShow(!show);
+    console.log(show);
+  };
+  useOnClickOutside(ref, () => setShow(false));
 
+  return (
     <Navbar className="header" variant="dark" expand="lg" collapseOnSelect>
       <LinkContainer to="/">
         <Navbar.Brand className="header-top">React E-Commerce</Navbar.Brand>
@@ -84,9 +92,9 @@ const Header = () => {
       </ul>
       <div className="header-bottom">
         <div className="header-search">
-          <i className="bx bx-search"></i>
+          <i className="bx bx-search" onClick={handleShowSearch}></i>
         </div>
-        <div className="search-box">
+        <div ref={ref} className={`search-box ${show ? "active" : ""} `}>
           <input type="text" placeholder="Search in here" />
         </div>
         <div className="header-cart">

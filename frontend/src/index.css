@@ -28,6 +28,9 @@ h2 {
 *::after {
   box-sizing: border-box;
 }
+#root {
+  overflow-x: hidden !important;
+}
 * {
   margin: 0;
   padding: 0;
@@ -35,7 +38,6 @@ h2 {
 }
 body {
   line-height: 1.5;
-  overflow: hidden;
 }
 img,
 picture,

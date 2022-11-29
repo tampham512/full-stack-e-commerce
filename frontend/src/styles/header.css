@@ -6,6 +6,7 @@
   width: 100%;
   padding: 0px 130px;
   min-height: 80px;
+  z-index: 9;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 .header-top {
@@ -92,7 +93,7 @@
   width: 400px;
   height: 60px;
   top: 90px;
-  right: 20;
+  right: -100%;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   display: flex;
@@ -101,6 +102,9 @@
   transition: 0.4s ease-in-out;
   z-index: 99;
   box-shadow: rgba(36, 38, 40, 0.2) 0px 8px 24px;
+}
+.search-box.active {
+  right: 0;
 }
 .search-box input {
   width: 100%;
