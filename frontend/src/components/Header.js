@@ -45,7 +45,7 @@ const Header = () => {
       </LinkContainer>
       <ul className="header-nav">
         <li className="header-nav-items">
-          <NavLink className="item-links" to="/home">
+          <NavLink className="item-links" to="/">
             Home
             <i className="bx bx-chevron-down"></i>
           </NavLink>
@@ -112,9 +112,9 @@ const Header = () => {
                 roles={[RolesEnums.get("ADMIN")]}
                 type="ifAnyGranted"
               >
-                <NavDropdown.Item onClick={handelChangeAdmin}>
-                  Admin
-                </NavDropdown.Item>
+                <LinkContainer to="/admin">
+                  <NavDropdown.Item>Admin</NavDropdown.Item>
+                </LinkContainer>
               </Authorization>
               <NavDropdown.Item onClick={logoutHandler}>
                 Logout
