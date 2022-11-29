@@ -31,7 +31,10 @@ const Header = () => {
   const handelChangeAdmin = () => {
     history.push("/admin");
   };
+
   const cart = useSelector((state) => state.cart);
+
+  const { cartItems } = cart;
   const handleShowSearch = () => {
     setShow(!show);
     console.log(show);
@@ -99,7 +102,9 @@ const Header = () => {
         </div>
         <div className="header-cart">
           <NavLink className="cart" to="/cart">
-            <i className="bx bx-cart"></i>
+            <Badge count={cartItems.reduce((acc, item) => acc + item.qty, 0)}>
+              <i className="bx bx-cart"></i>
+            </Badge>
           </NavLink>
         </div>
         <div className="header-login">

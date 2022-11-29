@@ -8,6 +8,10 @@
   min-height: 80px;
   z-index: 9;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 .header-top {
   color: black !important;
@@ -104,7 +108,7 @@
   box-shadow: rgba(36, 38, 40, 0.2) 0px 8px 24px;
 }
 .search-box.active {
-  right: 0;
+  right: 20px;
 }
 .search-box input {
   width: 100%;
@@ -120,7 +124,28 @@
   font-size: 22px;
   color: black;
 }
+.header-cart .cart i {
+  font-size: 22px;
+}
 .header-login .login.active,
 .header-cart .cart.active {
   color: #f05b6f;
+}
+.ant-scroll-number {
+  width: 5px;
+}
+:where(.css-dev-only-do-not-override-1qhh31y).ant-badge .ant-badge-count {
+  z-index: auto;
+  min-width: 16px;
+  height: 16px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  text-align: center;
+  background: #ff4d4f;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px #ffffff;
+  transition: background 0.2s;
 }
