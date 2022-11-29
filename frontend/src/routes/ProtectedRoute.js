@@ -2,6 +2,10 @@ import React from "react";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import ClientLayout from "../components/Layout/ClientLayout";
+import DashboardLayout from "../components/Layout/DashboardLayout";
+
+import { TYPE_LAYOUT } from "../utils/constants/Enum";
 
 export const RolesEnums = new Map([
   ["CUSTOMER_NOT_LOGIN", "customer_not_login"],
@@ -9,11 +13,7 @@ export const RolesEnums = new Map([
   ["ADMIN", "admin"],
 ]);
 
-function ProtectedRoute({ roles, component: Component, ...rest }) {
-  console.log(
-    "🚀 ~ file: ProtectedRoute.js ~ line 12 ~ ProtectedRoute ~ roles",
-    roles
-  );
+function ProtectedRoute({ roles, component: Component, typeLayout, ...rest }) {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   const authorities = useMemo(() => {
@@ -42,7 +42,32 @@ function ProtectedRoute({ roles, component: Component, ...rest }) {
   };
 
   if (roles.length == 0 || hasPermission(roles)) {
-    return <Route {...rest} render={() => <Component />} />;
+    switch (typeLayout) {
+      case TYPE_LAYOUT.CLIENT:
+        return (
+          <Route
+            {...rest}
+            render={(matchProps) => (
+              <ClientLayout>
+                <Component {...matchProps} />
+              </ClientLayout>
+            )}
+          />
+        );
+      case TYPE_LAYOUT.DASHBOARD:
+        return (
+          <Route
+            {...rest}
+            render={(matchProps) => (
+              <DashboardLayout>
+                <Component {...matchProps} />
+              </DashboardLayout>
+            )}
+          />
+        );
+      default:
+        return <Route {...rest} render={() => <Component />} />;
+    }
   } else {
     return <Route {...rest} render={() => <Redirect to={"/404"} />} />;
   }

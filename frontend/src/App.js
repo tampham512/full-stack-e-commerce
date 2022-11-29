@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 // Routing
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 // Components
 import Footer from "./components/Footer";
@@ -16,10 +16,13 @@ import history from "./utils/history";
 const App = () => {
   return (
     <Router history={history}>
-      <Header />
+      <Switch>
+        <Routes />
+      </Switch>
+      {/* <Header />
       <main className="py-3">
-        <Container>
-          {/* <Route path='/order/:id' component={OrderScreen} />
+        <Container> */}
+      {/* <Route path='/order/:id' component={OrderScreen} />
                     <Route path='/place-order' component={PlaceOrderScreen} />
                     <Route path='/payment' component={PaymentScreen} />
                     <Route path='/shipping' component={ShippingScreen} />
@@ -29,10 +32,10 @@ const App = () => {
                     <Route path='/product/:id' component={ProductScreen} />
                     <Route path='/cart/:id?' component={CartScreen} />
                     <Route path='/' component={HomeScreen} exact /> */}
-          <Routes />
-        </Container>
+
+      {/* </Container>
       </main>
-      <Footer />
+      <Footer /> */}
     </Router>
   );
 };
