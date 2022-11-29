@@ -65,6 +65,7 @@ function ProtectedRoute({ roles, component: Component, typeLayout, ...rest }) {
             )}
           />
         );
+
       default:
         return (
           <Route
