@@ -1,7 +1,7 @@
 import React from "react";
 
-function Doashboad() {
+function Dashboard() {
   return <div>admin</div>;
 }
 
-export default Doashboad;
+export default Dashboard;

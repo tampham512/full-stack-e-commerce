@@ -12,6 +12,10 @@ import history from "../utils/history";
 import "../styles/header.css";
 import { NavLink } from "react-router-dom";
 
+import { Avatar, Badge, Space } from "antd";
+
+import { cartReducer } from "../reducers/cartReducers";
+
 const Header = () => {
   const dispatch = useDispatch();
 
@@ -23,9 +27,10 @@ const Header = () => {
   };
   const handelChangeAdmin = () => {
     history.push("/admin");
-  };
-
+  }; 
+   const cart = useSelector((state) => state.cart)  
   return (
+
     <Navbar className="header" variant="dark" expand="lg" collapseOnSelect>
       <LinkContainer to="/">
         <Navbar.Brand className="header-top">React E-Commerce</Navbar.Brand>
