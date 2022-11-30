@@ -88,7 +88,7 @@ const Wrapper = style.div`
       .item {
         color: #a3a3a3;
         font-size: 20px;
-        line-height: 32px;
+        line-height: 36px;
         width: 33%; 
         padding: 4px;
         text-align: center; 
