@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 // Bootstrap UI Components
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
@@ -9,73 +9,121 @@ import { logout } from "../actions/userActions";
 import Authorization from "../hook/Authorization";
 import { RolesEnums } from "../routes/ProtectedRoute";
 import history from "../utils/history";
+import "../styles/header.css";
+import { NavLink } from "react-router-dom";
 
 import { Avatar, Badge, Space } from "antd";
 
 import { cartReducer } from "../reducers/cartReducers";
+import { useState, useEffect } from "react";
+import { useOnClickOutside } from "../hook/useOutsideAlerter";
 
 const Header = () => {
+  const ref = useRef();
   const dispatch = useDispatch();
-
+  const [show, setShow] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
     dispatch(logout());
   };
-  const handerChangeAdmin = () => {
+  const handelChangeAdmin = () => {
     history.push("/admin");
-  };
-  const cart = useSelector((state) => state.cart);
+  }; 
+   const cart = useSelector((state) => state.cart)  
   return (
-    <div>
-      <header>
-        <Navbar bg="info" variant="dark" expand="lg" collapseOnSelect>
-          <Container>
-            <LinkContainer to="/">
-              <Navbar.Brand>PTShop</Navbar.Brand>
-            </LinkContainer>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ml-auto">
-                <LinkContainer to="/cart">
-                  <Nav.Link>
-                    <Space size="middle">
-                      <Badge size="small" count={cart.cartItems.length}>
-                        <i className="fa fa-shopping-cart mr-2"></i>
-                      </Badge>
-                    </Space>
-                    Cart
-                  </Nav.Link>
+    <Navbar className="header" variant="dark" expand="lg" collapseOnSelect>
+      <LinkContainer to="/">
+        <Navbar.Brand className="header-top">React E-Commerce</Navbar.Brand>
+      </LinkContainer>
+      <ul className="header-nav">
+        <li className="header-nav-items">
+          <NavLink className="item-links" to="/">
+            Home
+            <i className="bx bx-chevron-down"></i>
+          </NavLink>
+          <ul className="nav-child">
+            <li className="nav-child-items">home 1</li>
+            <li className="nav-child-items">home 2</li>
+          </ul>
+        </li>
+        <li className="header-nav-items">
+          <NavLink className="item-links" to="/shop">
+            shop
+            <i className="bx bx-chevron-down"></i>
+          </NavLink>
+          <ul className="nav-child">
+            <li className="nav-child-items">home 1</li>
+            <li className="nav-child-items">home 2</li>
+          </ul>
+        </li>
+        <li className="header-nav-items">
+          <NavLink className="item-links" to="/products">
+            products
+            <i className="bx bx-chevron-down"></i>
+          </NavLink>
+          <ul className="nav-child">
+            <li className="nav-child-items">home 1</li>
+            <li className="nav-child-items">home 2</li>
+          </ul>
+        </li>
+        <li className="header-nav-items">
+          <NavLink className="item-links" to="/blog">
+            blog
+          </NavLink>
+        </li>
+        <li className="header-nav-items">
+          <NavLink className="item-links" to="/about">
+            about us
+          </NavLink>
+        </li>
+        <li className="header-nav-items">
+          <NavLink className="item-links" to="/contact">
+            contact us
+          </NavLink>
+        </li>
+      </ul>
+      <div className="header-bottom">
+        <div className="header-search">
+          <i className="bx bx-search" onClick={handleShowSearch}></i>
+        </div>
+        <div ref={ref} className={`search-box ${show ? "active" : ""} `}>
+          <input type="text" placeholder="Search in here" />
+        </div>
+        <div className="header-cart">
+          <NavLink className="cart" to="/cart">
+            <Badge count={cartItems.reduce((acc, item) => acc + item.qty, 0)}>
+              <i className="bx bx-cart"></i>
+            </Badge>
+          </NavLink>
+        </div>
+        <div className="header-login">
+          {userInfo ? (
+            <NavDropdown title={userInfo.name} id="username">
+              <LinkContainer to="/profile">
+                <NavDropdown.Item>Profile</NavDropdown.Item>
+              </LinkContainer>
+              <Authorization
+                roles={[RolesEnums.get("ADMIN")]}
+                type="ifAnyGranted"
+              >
+                <LinkContainer to="/admin">
+                  <NavDropdown.Item>Admin</NavDropdown.Item>
                 </LinkContainer>
-                {userInfo ? (
-                  <NavDropdown title={userInfo.name} id="username">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <Authorization
-                      roles={[RolesEnums.get("ADMIN")]}
-                      type="ifAnyGranted"
-                    >
-                      <NavDropdown.Item onClick={handerChangeAdmin}>
-                        Admin
-                      </NavDropdown.Item>
-                    </Authorization>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                ) : (
-                  <LinkContainer to="/login">
-                    <Nav.Link>Sign In</Nav.Link>
-                  </LinkContainer>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    </div>
+              </Authorization>
+              <NavDropdown.Item onClick={logoutHandler}>
+                Logout
+              </NavDropdown.Item>
+            </NavDropdown>
+          ) : (
+            <NavLink className="login" to="/login">
+              <i className="bx bx-user"></i>
+            </NavLink>
+          )}
+        </div>
+      </div>
+    </Navbar>
   );
 };
 

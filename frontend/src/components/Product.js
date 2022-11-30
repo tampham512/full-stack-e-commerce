@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import style from "styled-components";
 import Rating from "./Rating";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { listProductDetails } from "../actions/productActions";
+import { addToCart } from "../actions/cartActions";
 
 const Product = ({ product }) => {
+  const [idProduct, setIdProduct] = useState();
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
+  useEffect(() => {
+    if (idProduct) {
+      dispatch(addToCart(idProduct, 1));
+    }
+  }, [dispatch, idProduct]);
+  
   const addToCartHandler = (id) => {
-    console.log("asd", id);
+    setIdProduct(id);
   };
   return (
     <Card className="my-3 p-3 rounded">
@@ -33,7 +47,10 @@ const Product = ({ product }) => {
 
         <div className="product-hover">
           <div className="action">
-            <div className="item" onClick={(e) => addToCartHandler(product._id)}>
+            <div
+              className="item"
+              onClick={(e) => addToCartHandler(product._id)}
+            >
               <i className="fa fa-shopping-cart"></i>
             </div>
             <div className="item">

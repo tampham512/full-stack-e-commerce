@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 
 const CheckboxNav = ({ listCheck }) => {
-  const type = "checkbox";
-  const [isChecked, setIsChecked] = useState(false);
+  const type = "checkbox"; 
 
   const handleChecked = (e, check) => {
     console.log(check);

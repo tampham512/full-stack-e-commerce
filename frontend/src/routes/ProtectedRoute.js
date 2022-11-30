@@ -65,8 +65,14 @@ function ProtectedRoute({ roles, component: Component, typeLayout, ...rest }) {
             )}
           />
         );
+
       default:
-        return <Route {...rest} render={() => <Component />} />;
+        return (
+          <Route
+            {...rest}
+            render={(matchProps) => <Component {...matchProps} />}
+          />
+        );
     }
   } else {
     return <Route {...rest} render={() => <Redirect to={"/404"} />} />;
