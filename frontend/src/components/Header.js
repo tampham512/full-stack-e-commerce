@@ -30,7 +30,7 @@ const Header = () => {
   };
   const handelChangeAdmin = () => {
     history.push("/admin");
-  };
+  }; 
 
   const cart = useSelector((state) => state.cart);
 
@@ -39,8 +39,7 @@ const Header = () => {
     setShow(!show);
     console.log(show);
   };
-  useOnClickOutside(ref, () => setShow(false));
-
+  useOnClickOutside(ref, () => setShow(false)); 
   return (
     <Navbar className="header" variant="dark" expand="lg" collapseOnSelect>
       <LinkContainer to="/">

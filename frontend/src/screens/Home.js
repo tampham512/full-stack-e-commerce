@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
+import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col } from "react-bootstrap";
 // Components
-import Product from "../components/Product";
-import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Message from "../components/Message";
+import Product from "../components/Product";
 // Redux
 import { listProducts } from "../actions/productActions";
-import CheckboxNav from "../components/CheckboxNav";
 import Slider from "../components/Slider";
+
+import styles from "styled-components";
 
 const listCheckbox = [
   {
@@ -50,44 +51,69 @@ const Home = () => {
   return (
     <>
       <Slider />
-      <div
-        style={{
-          marginTop: "44px",
-          position: "relative",    
-          textAlign: "center",
-        }}
-      >
-        <h3
-          style={{
-            border: "medium none",
-            color: "#000",
-            fontSize: "28px",
-            marginBottom:"0",
-            fontWeight: "500", 
-          }}
-        >
-          FEATURED PRODUCT
-        </h3>
-        <p>Featured Collections Created And Curated By Our Editors.</p>
-      </div>
+
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <div style={{ display: "flex" }}>
-          <CheckboxNav listCheck={listCheckbox} />
-          <Row style={{ width: "75%" }} md={3}>
-            {products.map((product) => (
-              <Col key={product._id} sm>
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
-        </div>
+        <>
+          <>
+            <Advertise className="advertise-product">
+              <div>
+                <h3>FEATURED PRODUCT</h3>
+                <p>Featured Collections Created And Curated By Our Editors.</p>
+              </div>
+            </Advertise>
+            <Row md={4}>
+              {products.slice(0, 4).map((product) => (
+                <Col key={product._id} sm>
+                  <Product product={product} />
+                </Col>
+              ))}
+            </Row>
+          </>
+          <>
+            <Advertise className="advertise-product">
+              <div>
+                <h3>NEW ARRIVAL</h3>
+                <p>Featured Collections Created And Curated By Our Editors.</p>
+              </div>
+            </Advertise>
+            <Row md={4}>
+              {products.slice(0, 4).map((product) => (
+                <Col key={product._id} sm>
+                  <Product product={product} />
+                </Col>
+              ))}
+            </Row>
+            <Row md={4}>
+              {products.slice(2, 6).map((product) => (
+                <Col key={product._id} sm>
+                  <Product product={product} />
+                </Col>
+              ))}
+            </Row>
+          </>
+        </>
       )}
     </>
   );
 };
 
 export default Home;
+
+const Advertise = styles.div`
+  div {
+    margin-top: 44px;
+    position: relative;
+    text-align: center;
+  }
+  h3 { 
+      border: medium none;
+      color: #000;
+      font-size: 28px;
+      margin-bottom: 0;
+      font-weight: 500";
+  }
+`;

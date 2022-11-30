@@ -22,6 +22,7 @@ import ShippingScreen from "../screens/Shipping";
 import PaymentScreen from "../screens/Payment";
 import PlaceOrderScreen from "../screens/PlaceOrder";
 import OrderScreen from "../screens/Order";
+import ListProductScreen from "../screens/ListProduct";
 import Page404 from "../screens/Page404";
 import ProtectedRoute, { RolesEnums } from "./ProtectedRoute";
 import Doashboard from "../admin/screens/Doashboard";
@@ -115,6 +116,13 @@ const Routes = () => {
         typeLayout={TYPE_LAYOUT.CLIENT}
         path="/profile"
         component={ProfileScreen}
+        exact
+        roles={[]}
+      />
+      <ProtectedRoute
+        typeLayout={TYPE_LAYOUT.CLIENT}
+        path="/list-product"
+        component={ListProductScreen}
         exact
         roles={[]}
       />
