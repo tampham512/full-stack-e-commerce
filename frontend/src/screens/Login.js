@@ -10,11 +10,12 @@ import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 // Redux Actions
 import { login } from "../actions/userActions";
+import SignIn from "../admin/pages/SignIn";
 
 const Login = ({ location, history }) => {
   // State to hold email and password
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
 
@@ -32,19 +33,18 @@ const Login = ({ location, history }) => {
   }, [history, userInfo, redirect]);
 
   // Handler that logs in the user
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = (values) => {
+    // e.preventDefault();
 
     // Dispatch login
-    dispatch(login(email, password));
+    dispatch(login(values.email, values.password));
   };
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
+      {/* <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
@@ -74,7 +74,8 @@ const Login = ({ location, history }) => {
             Register Tamhihi
           </Link>
         </Col>
-      </Row>
+      </Row> */}
+      <SignIn onSubmit={submitHandler} />
     </FormContainer>
   );
 };

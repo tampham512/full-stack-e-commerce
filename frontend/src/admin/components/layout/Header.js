@@ -37,6 +37,7 @@ import {
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../assets/images/team-2.jpg";
+import Box from "../../../components/Box";
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -270,27 +271,27 @@ function Header({
 
   return (
     <>
-      <div className="setting-drwer" onClick={showDrawer}>
+      {/* <div className="setting-drwer" onClick={showDrawer}>
         {setting}
-      </div>
+      </div> */}
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
-          <Breadcrumb>
+          {/* <Breadcrumb>
             <Breadcrumb.Item>
               <NavLink to="/">Pages</NavLink>
             </Breadcrumb.Item>
             <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
               {name.replace("/", "")}
             </Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="ant-page-header-heading">
+          </Breadcrumb> */}
+          {/* <div className="ant-page-header-heading">
             <span
               className="ant-page-header-heading-title"
               style={{ textTransform: "capitalize" }}
             >
               {subName.replace("/", "")}
             </span>
-          </div>
+          </div> */}
         </Col>
         <Col span={24} md={18} className="header-control">
           <Badge size="small" count={4}>
@@ -422,8 +423,10 @@ function Header({
             </div>
           </Drawer>
           <Link to="/sign-in" className="btn-sign-in">
-            {profile}
-            <span>Sign in</span>
+            <Box display="flex">
+              {profile}
+              <span>Sign in</span>
+            </Box>
           </Link>
           <Input
             className="header-search"
