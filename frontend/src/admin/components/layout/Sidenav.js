@@ -2,10 +2,11 @@ import React from "react";
 import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import Box from "../../../components/Box";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
-  const page = pathname.replace("/admin", "admin");
+  const page = pathname.replace("/", "");
 
   const dashboard = [
     <svg
@@ -150,10 +151,10 @@ function Sidenav({ color }) {
 
   return (
     <>
-      <div className="brand">
+      <Box className="brand" display="flex">
         <img src={logo} alt="" />
         <span>Muse Dashboard</span>
-      </div>
+      </Box>
       <hr />
       <Menu theme="light" mode="inline">
         <Menu.Item key="1">
