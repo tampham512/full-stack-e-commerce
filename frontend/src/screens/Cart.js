@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 // Redux Actions
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import "../styles/cart.css";
 
 const Cart = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -52,7 +53,7 @@ const Cart = ({ match, location, history }) => {
             Your cart is empty <Link to="/">Go back</Link>
           </Message>
         ) : (
-          <ListGroup variant="flush">
+          <ListGroup className="list-group-item-second" variant="flush">
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
                 <Row>
@@ -62,7 +63,7 @@ const Cart = ({ match, location, history }) => {
                   <Col md={3}>
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
-                  <Col md={2}>{item.price * item.qty}</Col>
+                  <Col md={2}>{(item.price * item.qty).toFixed()} $</Col>
                   <Col md={2}>
                     <Form.Control
                       as="select"
@@ -96,30 +97,45 @@ const Cart = ({ match, location, history }) => {
         )}
       </Col>
       <Col md={4}>
-        <Card>
+        <Card className="cart-box">
           <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h2>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                items
-              </h2>
-              $
-              {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Button
-                type="button"
-                className="btn-block"
-                disabled={cartItems.length === 0}
-                onClick={checkoutHandler}
-              >
-                Proceed to checkout
-              </Button>
-            </ListGroup.Item>
+            <ListGroup>
+              <h2 className="orderSummary">ORDER SUMMARY</h2>
+            </ListGroup>
+            <div className="cart-box-price">
+              <span>
+                {cartItems.reduce((acc, item) => acc + item.qty, 0)} ITEM
+              </span>
+              <span>
+                $
+                {cartItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </span>
+            </div>
+            <div className="cart-box-transport">
+              <span>DELIVERY</span>
+              <span>Free</span>
+            </div>
+            <div className="cart-box-total">
+              <span>TOTAL</span>
+              <span>
+                $
+                {cartItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </span>
+            </div>
           </ListGroup>
         </Card>
+        <button
+          type="button"
+          className="btn-block"
+          disabled={cartItems.length === 0}
+          onClick={checkoutHandler}
+        >
+          Checkout <i className="bx bx-right-arrow-alt"></i>
+        </button>
       </Col>
     </Row>
   );
