@@ -10,7 +10,7 @@ const users = [
         password: bcrypt.hashSync('123456', 10), // Generate hash for password
         isAdmin: true,
     },
-    {
+    {   
         name: 'John Wayne',
         email: 'jwayne@example.com',
         password: bcrypt.hashSync('123456', 10),
