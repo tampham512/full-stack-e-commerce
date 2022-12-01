@@ -29,6 +29,7 @@ import Doashboard from "../admin/screens/Doashboard";
 import SignIn from "../admin/pages/SignIn";
 import SignUp from "../admin/pages/SignUp";
 import HomeAdmin from "../admin/pages/Home";
+import ManageAdministrator from "../admin/pages/ManageAdministrator";
 
 import Profile from "../admin/pages/Profile";
 import Rtl from "../admin/pages/Rtl";
@@ -43,12 +44,19 @@ const Routes = () => {
     <>
       <Route path="/sign-in" component={SignIn} />
       <Route path="/sign-up" component={SignUp} />
-      <ProtectedRoute path="/login" component={LoginScreen} exact roles={[]} />
+      <ProtectedRoute
+        path="/login"
+        component={LoginScreen}
+        exact
+        roles={[]}
+        typeLayout={TYPE_LAYOUT.CLIENT}
+      />
       <ProtectedRoute
         path="/register"
         component={RegisterScreen}
         exact
         roles={[]}
+        typeLayout={TYPE_LAYOUT.CLIENT}
       />
       <ProtectedRoute
         typeLayout={TYPE_LAYOUT.DASHBOARD}
@@ -84,6 +92,14 @@ const Routes = () => {
         component={Profile}
         exact
       />
+      <ProtectedRoute
+        typeLayout={TYPE_LAYOUT.DASHBOARD}
+        path="/admin/administrator"
+        roles={[RolesEnums.get("ADMIN")]}
+        component={ManageAdministrator}
+        exact
+      />
+
       <ProtectedRoute
         typeLayout={TYPE_LAYOUT.CLIENT}
         path="/order/:id"
