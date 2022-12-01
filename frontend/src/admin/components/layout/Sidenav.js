@@ -6,6 +6,7 @@ import Box from "../../../components/Box";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
+  console.log("🚀 ~ file: Sidenav.js:9 ~ Sidenav ~ pathname", pathname);
   const page = pathname.replace("/", "");
 
   const dashboard = [
@@ -157,8 +158,8 @@ function Sidenav({ color }) {
       </Box>
       <hr />
       <Menu theme="light" mode="inline">
-        <Menu.Item key="1">
-          <NavLink to="/admin">
+        <Menu.Item key="1" className={pathname === "/admin" ? "active" : ""}>
+          <NavLink to="/admin/">
             <span
               className="icon"
               style={{
@@ -171,11 +172,14 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
-          <NavLink to="/admin/administrator">
+          <NavLink
+            to="/admin/administrator"
+            className={pathname === "/admin/administrator" ? "active" : ""}
+          >
             <span
               className="icon"
               style={{
-                background: page === "/admin/administrator" ? color : "",
+                background: pathname === "/admin/administrator" ? color : "",
               }}
             >
               {tables}
@@ -188,7 +192,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "/admin/customer" ? color : "",
+                background: pathname === "/admin/customer" ? color : "",
               }}
             >
               {tables}
@@ -201,7 +205,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "/admin/products" ? color : "",
+                background: pathname === "/admin/products" ? color : "",
               }}
             >
               {tables}
@@ -214,7 +218,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "/admin/order" ? color : "",
+                background: pathname === "/admin/order" ? color : "",
               }}
             >
               {rtl}
@@ -230,7 +234,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "profile" ? color : "",
+                background: pathname === "profile" ? color : "",
               }}
             >
               {profile}

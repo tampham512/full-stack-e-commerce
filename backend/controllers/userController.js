@@ -90,6 +90,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     // Check which fields were sent in the request else just keep them the same
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.address = req.body.address || user.address;
+    user.numberPhone = req.body.numberPhone || user.numberPhone;
+    user.status = req.body.status || user.status;
+
     // Check if password was sent with request
     if (req.body.password) {
       user.password = req.body.password;
@@ -100,6 +104,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updateUser._id,
       name: updateUser.name,
       email: updateUser.email,
+      numberPhone: updateUser.numberPhone,
+      numberPhone: updateUser.numberPhone,
+      status: updateUser.status,
       isAdmin: updateUser.isAdmin,
       token: generateToken(updateUser._id),
     });
@@ -140,6 +147,50 @@ const getUsersCustomer = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
+
+const createUser = asyncHandler(async (req, res) => {
+  const { name, email, password, andress, numberPhone, isAdmin } = req.body;
+
+  const userExists = await User.findOne({ email });
+
+  // If the user exists already
+  if (userExists) {
+    res.status(201).json({
+      status: 400,
+      data: {
+        email: "Email already exists.",
+      },
+    });
+  }
+
+  // Create a new user
+  const user = await User.create({
+    name,
+    email,
+    password,
+    andress,
+    numberPhone,
+    isAdmin,
+  });
+
+  // If the user is successfully created then send back user details in response
+  if (user) {
+    res.status(201).json({
+      status: 200,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        address: user.address,
+        numberPhone: user.numberPhone,
+        isAdmin: user.isAdmin,
+      },
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
+  }
+});
 export {
   authUser,
   getUserProfile,
@@ -147,4 +198,5 @@ export {
   updateUserProfile,
   getUsersAdmin,
   getUsersCustomer,
+  createUser,
 };

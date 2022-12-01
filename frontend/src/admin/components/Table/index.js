@@ -72,26 +72,6 @@ const Index = ({ dataSource, columns, props }) => {
             >
               Reset
             </Button>
-            {/* <Button
-              type="link"
-              size="small"
-              onClick={() => {
-                confirm({ closeDropdown: false });
-                setSearchText(selectedKeys[0]);
-                setSearchedColumn(dataIndex);
-              }}
-            >
-              Filter
-            </Button> */}
-            {/* <Button
-              type="link"
-              size="small"
-              onClick={() => {
-                close();
-              }}
-            >
-              close
-            </Button> */}
           </Space>
         </div>
       ),
@@ -108,18 +88,7 @@ const Index = ({ dataSource, columns, props }) => {
           setTimeout(() => searchInput.current?.select(), 100);
         }
       },
-      render: (text) =>
-        // searchedColumn === dataIndex ? (
-        //   //   <Highlighter
-        //   //     highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-        //   //     searchWords={[searchText]}
-        //   //     autoEscape
-        //   //     textToHighlight={text ? text.toString() : ""}
-        //   //   />
-        //   <Box backgroundColor="#ffc069">{text}</Box>
-        // ) : (
-        text,
-      // ),
+      render: (text) => text,
     };
   };
 
