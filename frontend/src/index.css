@@ -65,3 +65,17 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+.ant-btn{
+  line-height:unset !important;
+  outline: none !important;
+}
+.ant-menu{
+  border:none !important;
+  min-width: 120px !important;
+}
+.ant-popover-inner{
+  padding:0 !important;
+}
+.bx{
+  cursor: pointer;
+}

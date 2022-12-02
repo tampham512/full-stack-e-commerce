@@ -14,6 +14,7 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_DETAILS_RESET,
   USERS_ADMIN,
+  DATA_GET,
 } from "../constants/userConstants";
 import { ORDER_LIST_USER_RESET } from "../constants/orderConstants";
 import axios from "axios";
@@ -232,5 +233,42 @@ export const getUsersAdmin = () => async (dispatch) => {
     //       ? error.response.data.message
     //       : error.message,
     // });
+  }
+};
+
+export const createUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_PROFILE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    // Header to send with the request
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // Make request to server and get the response data
+    const { data } = await axios.post(`/api/users/create`, user, config);
+
+    // Dispatch user register success after making the request
+    dispatch({
+      type: DATA_GET,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DATA_GET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

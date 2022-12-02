@@ -1,4 +1,5 @@
 import {
+  DATA_GET,
   USERS_ADMIN,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
@@ -119,6 +120,31 @@ export const usersAdminReducer = (state = {}, action) => {
     //         loading: true,
     //     }
     case USERS_ADMIN:
+      return {
+        loading: false,
+        user: action.payload,
+      };
+    // case USER_DETAILS_FAIL:
+    //   return {
+    //     loading: false,
+    //     error: action.payload,
+    //   };
+    // case USER_DETAILS_RESET:
+    //   return {
+    //     user: {},
+    //   };
+    default:
+      return state;
+  }
+};
+export const getDataReducer = (state = {}, action) => {
+  switch (action.type) {
+    // case USER_DETAILS_REQUEST:
+    //     return {
+    //         ...state,
+    //         loading: true,
+    //     }
+    case DATA_GET:
       return {
         loading: false,
         user: action.payload,
