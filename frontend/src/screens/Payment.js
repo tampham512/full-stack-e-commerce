@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Col } from "react-bootstrap";
+import { Button as Bt } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 
@@ -48,9 +49,9 @@ const Payment = ({ history }) => {
             {/* <Form.Check type='radio' label='Stripe' id='Stripe' name='paymentMethod' value='Stripe' checked onChange={(e) => setPaymentMethod(e.target.value)}></Form.Check> */}
           </Col>
         </Form.Group>
-        <Button type="submit" variant="primary">
+        <Bt type="primary" danger onClick={submitHandler}>
           Continue
-        </Button>
+        </Bt>
       </Form>
     </FormContainer>
   );
