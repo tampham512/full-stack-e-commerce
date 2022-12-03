@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col, ListGroup, Image } from "react-bootstrap";
+import { Form, Row, Col, ListGroup, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
-
+import { Button } from "antd";
 import { saveShippingAddress } from "../actions/cartActions";
 
 import CheckoutSteps from "../components/CheckoutSteps";
-import { Badge } from "antd";
+import { Badge, Checkbox } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const Shipping = ({ history }) => {
@@ -31,123 +31,150 @@ const Shipping = ({ history }) => {
   };
 
   return (
-    <FormContainer>
-      <div style={{ display: "flex" }}>
-        <div
-          className="sc-left"
-          style={{ width: "60%", backgroundColor: "white" }}
-        >
-          <CheckoutSteps step1 step2 />
-          <Form onSubmit={submitHandler} style={{ margin: "20px" }}>
-            <Row>
-              <Col>
-                <span>Contact information</span>
-              </Col>
-              <Col style={{ textAlign: "right" }}>
-                Already have account? <Link to="/login">Login</Link>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Form.Group controlId="contact">
-                  <Form.Control
-                    type="text"
-                    placeholder="Email or phone number"
-                    value={contact}
-                    onChange={(e) => setContact(e.target.value)}
-                    required
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <span>Shipping address</span>
-              </Col>
-              <Col xs={12}>
-                <Form.Group controlId="address">
-                  <Form.Control
-                    type="text"
-                    placeholder="Name line"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    required
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                <Form.Group controlId="town">
-                  <Form.Control
-                    type="text"
-                    placeholder="Number line"
-                    value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                    required
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="mb-2">
-              <Col xs={6}>
-                <Form.Group controlId="city">
-                  <Form.Control
-                    type="text"
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-              <Col xs={6}>
-                <Form.Group controlId="country">
-                  <Form.Control
-                    type="text"
-                    placeholder="Country"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    required
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col>&lt;- Return to cart</Col>
-              <Col style={{ textAlign: "right" }}>
-                <Button type="submit" variant="danger" size="lg">
-                  Continue to shipping
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+    <Wrapper>
+      <FormContainer>
+        <div style={{ display: "flex" }}>
+          <div className="sc-left" style={{ width: "60%" }}>
+            <CheckoutSteps step1 step2 />
+            <Form onSubmit={submitHandler} style={{ margin: "20px" }}>
+              <Row>
+                <Col>
+                  <h4>Contact information</h4>
+                </Col>
+                <Col style={{ bottom: "-12px", textAlign: "right" }}>
+                  <h4 style={{ fontSize: "12px", color: "#605f5fa6" }}>
+                    Already have account? <Link to="/login">Login</Link>
+                  </h4>
+                </Col>
+              </Row>
+              <Row style={{ padding: "0 0 20px 0" }}>
+                <Col>
+                  <Form.Group controlId="contact">
+                    <Form.Control
+                      type="text"
+                      placeholder="Email or phone number"
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                      required
+                    ></Form.Control>
+                  </Form.Group>
+                  <Checkbox>Email me with news and offers</Checkbox>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <h4>Shipping address</h4>
+                </Col>
+                <Col xs={12}>
+                  <Form.Group controlId="address">
+                    <Form.Label>Street names</Form.Label>
+
+                    <Form.Control
+                      type="text"
+                      placeholder="Street names"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      required
+                    ></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <Form.Group controlId="town">
+                    <Form.Label>Number street</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Number street"
+                      value={postalCode}
+                      onChange={(e) => setPostalCode(e.target.value)}
+                      required
+                    ></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="mb-2">
+                <Col xs={6}>
+                  <Form.Group controlId="city">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="City"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                      required
+                    ></Form.Control>
+                  </Form.Group>
+                  <Checkbox>Save this information for next time</Checkbox>
+                </Col>
+                <Col xs={6}>
+                  <Form.Group controlId="country">
+                    <Form.Label>Country</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Country"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      required
+                    ></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={{ color: "#e08b27", top: "10px" }}>
+                  <span>
+                    <Link to={"/cart"}>{`< Return to cart`}</Link>
+                  </span>
+                </Col>
+                <Col style={{ textAlign: "right" }}>
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={(e) => submitHandler(e)}
+                  >
+                    Continue to shipping
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+          <div
+            className="sc-right"
+            style={{ width: "40%", margin: "20px", float: "left" }}
+          >
+            <ListGroup variant="flush">
+              {cart.cartItems.map((item, index) => (
+                <ListGroup.Item key={index}>
+                  <Row>
+                    <Col md={3}>
+                      <Badge count={item.qty}>
+                        <Image src={item.image} alt={item.name} />
+                      </Badge>
+                    </Col>
+                    <Col>
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    </Col>
+                    <Col md={2}>${item.price}</Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </div>
         </div>
-        <div
-          className="sc-right"
-          style={{ width: "40%", margin: "20px", float: "left" }}
-        >
-          <ListGroup variant="flush">
-            {cart.cartItems.map((item, index) => (
-              <ListGroup.Item key={index}>
-                <Row>
-                  <Col md={3}>
-                    <Badge count={item.qty}>
-                      <Image src={item.image} alt={item.name} />
-                    </Badge>
-                  </Col>
-                  <Col>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
-                  </Col>
-                  <Col md={2}>${item.price}</Col>
-                </Row>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </div>
-      </div>
-    </FormContainer>
+      </FormContainer>
+    </Wrapper>
   );
 };
 
 export default Shipping;
+
+const Wrapper = styled.div`
+  a {
+    text-decoration: none;
+  }
+
+  h4 {
+    color: #6c6c6c;
+  }
+`;

@@ -1,0 +1,120 @@
+.signIn {
+  width: 556px;
+}
+.layout-signin {
+  margin-top: 40px;
+  margin-bottom: 60px;
+  padding: 60px 50px;
+  background-color: white;
+  border-radius: 10px;
+}
+.title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  color: #171725;
+}
+.register {
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  color: #808191;
+}
+.register-link {
+  font-weight: 500;
+  font-size: 14px;
+  color: #1dc071;
+}
+.inputPass,
+.inputUser {
+  padding: 0px 25px;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+  height: 45px;
+}
+.inputPass::placeholder,
+.inputUser::placeholder {
+  color: #b2b3bd;
+}
+.username {
+  position: relative;
+}
+.inputPass {
+  padding-right: 50px;
+}
+.iconEye {
+  cursor: pointer;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 99;
+}
+.remember {
+  display: flex;
+  justify-content: end;
+}
+.loginBtn {
+  background: #1dc071;
+  height: 42px;
+  font-weight: 600;
+  font-size: 16px;
+}
+:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-checked
+  .ant-checkbox-inner {
+  background-color: #1dc071;
+  border-color: #1dc071;
+  z-index: 2;
+}
+:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-wrapper:not(
+    .ant-checkbox-wrapper-disabled
+  ):hover
+  .ant-checkbox-inner,
+:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox:not(
+    .ant-checkbox-disabled
+  ):hover
+  .ant-checkbox-inner {
+  border-color: #1dc071;
+}
+:where(.css-dev-only-do-not-override-17p3bx5).ant-btn-primary:not(
+    :disabled
+  ):hover {
+  color: #fff;
+  background-color: #1dc071;
+}
+:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-wrapper-checked:not(
+    .ant-checkbox-wrapper-disabled
+  ):hover
+  .ant-checkbox-inner,
+:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-checked:not(
+    .ant-checkbox-disabled
+  ):hover
+  .ant-checkbox-inner {
+  background-color: #1dc071;
+  border-color: transparent;
+}
+:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-wrapper:not(
+    .ant-checkbox-wrapper-disabled
+  ):hover
+  .ant-checkbox-inner,
+:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox:not(
+    .ant-checkbox-disabled
+  ):hover
+  .ant-checkbox-inner {
+  border-color: #1dc071;
+}
+button:focus {
+  outline: none;
+}
+:where(.css-dev-only-do-not-override-17p3bx5).ant-btn:not(
+    :disabled
+  ):focus-visible {
+  outline: 4px solid #1dc071;
+}
+:where(.css-dev-only-do-not-override-17p3bx5).ant-input:focus,
+:where(.css-dev-only-do-not-override-17p3bx5).ant-input-focused {
+  border-color: #1dc071;
+}

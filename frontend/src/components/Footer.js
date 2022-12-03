@@ -41,7 +41,14 @@ const copyright =
 
 const Footer = () => {
   return (
-    <footer style={{ backgroundColor: "white" }}>
+    <footer
+      style={{
+        backgroundColor: "white",
+        marginTop: "40px",
+        paddingTop: "60px",
+        borderTop: "0.5px solid #c0c0c0a6",
+      }}
+    >
       <Container>
         <Row>
           {footerList.map((item, index) => (
