@@ -2,10 +2,12 @@ import express from "express";
 import {
   authUser,
   createUser,
+  getUserById,
   getUserProfile,
   getUsersAdmin,
   getUsersCustomer,
   registerUser,
+  updateUserById,
   updateUserProfile,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -19,7 +21,9 @@ router
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 router.route("/admin/users").get(protect, getUsersAdmin);
-router.route("/customer/users").get(protect, getUsersCustomer);
+router.route("/customer").get(protect, getUsersCustomer);
 router.route("/create").post(protect, createUser);
+router.route("/:id").get(protect, getUserById);
+router.route("/:id").put(protect, updateUserById);
 
 export default router;

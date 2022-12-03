@@ -9,6 +9,11 @@ import {
   getUsersAdmin,
   updateUserById,
 } from "../../../actions/userActions";
+import {
+  createCategory,
+  updateCategoryById,
+  getCategory,
+} from "../../../actions/categoryActions";
 
 import {
   DotChartOutlined,
@@ -23,12 +28,12 @@ import useUpdateEffect from "../../../hook/useUpdateEffect";
 
 function Index() {
   const dispatch = useDispatch();
-  const usersAdmin = useSelector((state) => state.usersAdmin);
+  const listCategory = useSelector((state) => state.categoryList);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState("");
 
-  const createUserData = useSelector((state) => state.getData);
+  const upsertCategory = useSelector((state) => state.upsertCategory);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -37,29 +42,30 @@ function Index() {
   };
 
   useUpdateEffect(() => {
-    if (createUserData?.user?.status == 200) {
+    if (upsertCategory?.data?.status == 200) {
       messageApi.open({
         type: "success",
         content: editId ? "Edited Success!" : "Created Success!",
         duration: 3,
       });
-      dispatch(getUsersAdmin());
+      dispatch(getCategory());
       setIsModalOpen(false);
     }
-  }, [createUserData]);
+  }, [upsertCategory]);
 
   const handleOk = (values) => {
     if (editId) {
       dispatch(
-        updateUserById({
+        updateCategoryById({
           ...values,
           _id: editId,
           status: values.status ? 1 : 0,
         })
       );
     } else {
-      dispatch(createUser({ ...values, isAdmin: true }));
+      dispatch(createCategory({ ...values }));
     }
+    // setIsModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -68,7 +74,7 @@ function Index() {
   };
 
   useEffect(() => {
-    dispatch(getUsersAdmin());
+    dispatch(getCategory());
   }, []);
 
   const handleClickAction =
@@ -81,6 +87,7 @@ function Index() {
           break;
       }
     };
+
   const items = [
     {
       label: "Edit",
@@ -94,16 +101,16 @@ function Index() {
 
   const columns = [
     {
-      title: "Full Name",
+      title: "Name",
       dataIndex: "name",
       key: "name",
       width: "30%",
       isSearch: true,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Slug",
+      dataIndex: "slug",
+      key: "slug",
       width: "20%",
       isSearch: true,
     },
@@ -158,12 +165,13 @@ function Index() {
       ),
     },
   ];
+  console.log(listCategory);
   return (
     <Box backgroundColor="#fff" padding="20px">
       {contextHolder}
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box fontSize="22px" marginBottom="20px" fontWeight="bold">
-          Manage Adminstrator
+          Manage Category
         </Box>
         <Button
           type="primary"
@@ -171,25 +179,25 @@ function Index() {
           size="middle"
           onClick={showModal}
         >
-          Add
+          Add Category
         </Button>
       </Box>
 
-      <Table columns={columns} dataSource={usersAdmin?.user?.data} />
-      {isModalOpen &
-      (
+      <Table columns={columns} dataSource={listCategory?.data?.data} />
+      {isModalOpen && (
         <Modal
-          title={<H1>{editId ? "Edit" : "Add"} Administrator</H1>}
+          title={<H1>{editId ? "Edit" : "Add"} Category</H1>}
           open={isModalOpen}
           onCancel={handleCancel}
           okText="Save"
           cancelText="Cancel"
           footer={false}
+          width="1000px"
         >
           <Upsert
             onCancel={handleCancel}
             onFinish={handleOk}
-            erorrs={createUserData}
+            erorrs={upsertCategory}
             editId={editId}
           />
         </Modal>

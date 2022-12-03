@@ -139,11 +139,11 @@ export const usersAdminReducer = (state = {}, action) => {
 };
 export const getDataReducer = (state = {}, action) => {
   switch (action.type) {
-    // case USER_DETAILS_REQUEST:
-    //     return {
-    //         ...state,
-    //         loading: true,
-    //     }
+    case "RESET_DATA":
+      return {
+        user: action.payload,
+        loading: true,
+      };
     case DATA_GET:
       return {
         loading: false,
@@ -158,6 +158,18 @@ export const getDataReducer = (state = {}, action) => {
     //   return {
     //     user: {},
     //   };
+    default:
+      return state;
+  }
+};
+export const getUserByIdReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "DATA_GET_USER_ID":
+      return {
+        loading: false,
+        user: action.payload,
+      };
+
     default:
       return state;
   }

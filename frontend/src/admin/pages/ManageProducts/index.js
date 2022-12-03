@@ -4,17 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "../../../components/Box";
 
 import Table from "../../components/Table";
-import {
-  createUser,
-  getUsersAdmin,
-  updateUserById,
-} from "../../../actions/userActions";
 
 import {
-  DotChartOutlined,
-  EllipsisOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+  listProducts,
+  updateProductById,
+  createProduct,
+} from "../../../actions/productActions";
+
+import { PlusOutlined } from "@ant-design/icons";
 import Button from "../../components/Button";
 import { Dropdown, Menu, message, Modal, Popover, Tag } from "antd";
 import H1 from "../../components/Heading/H1";
@@ -23,12 +20,13 @@ import useUpdateEffect from "../../../hook/useUpdateEffect";
 
 function Index() {
   const dispatch = useDispatch();
-  const usersAdmin = useSelector((state) => state.usersAdmin);
+  const productList = useSelector((state) => state.productList);
+  console.log("🚀 ~ file: index.js:24 ~ Index ~ productList", productList);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState("");
 
-  const createUserData = useSelector((state) => state.getData);
+  const upsertProduct = useSelector((state) => state.upsertProduct);
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -37,29 +35,30 @@ function Index() {
   };
 
   useUpdateEffect(() => {
-    if (createUserData?.user?.status == 200) {
+    if (upsertProduct?.data?.status == 200) {
       messageApi.open({
         type: "success",
         content: editId ? "Edited Success!" : "Created Success!",
         duration: 3,
       });
-      dispatch(getUsersAdmin());
+      dispatch(listProducts());
       setIsModalOpen(false);
     }
-  }, [createUserData]);
+  }, [upsertProduct]);
 
   const handleOk = (values) => {
     if (editId) {
       dispatch(
-        updateUserById({
+        updateProductById({
           ...values,
           _id: editId,
           status: values.status ? 1 : 0,
         })
       );
     } else {
-      dispatch(createUser({ ...values, isAdmin: true }));
+      dispatch(createProduct({ ...values }));
     }
+    // setIsModalOpen(false);
   };
 
   const handleCancel = () => {
@@ -68,7 +67,7 @@ function Index() {
   };
 
   useEffect(() => {
-    dispatch(getUsersAdmin());
+    dispatch(listProducts());
   }, []);
 
   const handleClickAction =
@@ -81,6 +80,7 @@ function Index() {
           break;
       }
     };
+
   const items = [
     {
       label: "Edit",
@@ -94,16 +94,16 @@ function Index() {
 
   const columns = [
     {
-      title: "Full Name",
+      title: "Name",
       dataIndex: "name",
       key: "name",
       width: "30%",
       isSearch: true,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Slug",
+      dataIndex: "slug",
+      key: "slug",
       width: "20%",
       isSearch: true,
     },
@@ -113,7 +113,7 @@ function Index() {
       key: "createdAt",
       isSearch: true,
       width: "20%",
-      render: (record) => record?.substring(0, 10),
+      render: (record) => record.createdAt.substring(0, 10),
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
       sortDirections: ["descend", "ascend", "descend"],
     },
@@ -158,12 +158,18 @@ function Index() {
       ),
     },
   ];
+
   return (
     <Box backgroundColor="#fff" padding="20px">
       {contextHolder}
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Box fontSize="22px" marginBottom="20px" fontWeight="bold">
-          Manage Adminstrator
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        marginBottom="20px"
+      >
+        <Box fontSize="22px" fontWeight="bold">
+          Manage Products
         </Box>
         <Button
           type="primary"
@@ -171,25 +177,25 @@ function Index() {
           size="middle"
           onClick={showModal}
         >
-          Add
+          Add Product
         </Button>
       </Box>
 
-      <Table columns={columns} dataSource={usersAdmin?.user?.data} />
-      {isModalOpen &
-      (
+      <Table columns={columns} dataSource={productList?.products} />
+      {isModalOpen && (
         <Modal
-          title={<H1>{editId ? "Edit" : "Add"} Administrator</H1>}
+          title={<H1>{editId ? "Edit" : "Add"} Product</H1>}
           open={isModalOpen}
           onCancel={handleCancel}
           okText="Save"
           cancelText="Cancel"
           footer={false}
+          width="1000px"
         >
           <Upsert
             onCancel={handleCancel}
             onFinish={handleOk}
-            erorrs={createUserData}
+            erorrs={upsertProduct}
             editId={editId}
           />
         </Modal>

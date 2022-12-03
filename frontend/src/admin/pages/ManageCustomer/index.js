@@ -7,6 +7,8 @@ import Table from "../../components/Table";
 import {
   createUser,
   getUsersAdmin,
+  getUsersCustomer,
+  resetData,
   updateUserById,
 } from "../../../actions/userActions";
 
@@ -16,14 +18,14 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import Button from "../../components/Button";
-import { Dropdown, Menu, message, Modal, Popover, Tag } from "antd";
+import { Dropdown, message, Modal, Tag } from "antd";
 import H1 from "../../components/Heading/H1";
 import Upsert from "./components/Upsert";
 import useUpdateEffect from "../../../hook/useUpdateEffect";
 
 function Index() {
   const dispatch = useDispatch();
-  const usersAdmin = useSelector((state) => state.usersAdmin);
+  const usersCusomter = useSelector((state) => state.usersAdmin);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editId, setEditId] = useState("");
@@ -41,9 +43,9 @@ function Index() {
       messageApi.open({
         type: "success",
         content: editId ? "Edited Success!" : "Created Success!",
-        duration: 3,
+        duration: 6,
       });
-      dispatch(getUsersAdmin());
+      dispatch(getUsersCustomer());
       setIsModalOpen(false);
     }
   }, [createUserData]);
@@ -58,7 +60,7 @@ function Index() {
         })
       );
     } else {
-      dispatch(createUser({ ...values, isAdmin: true }));
+      dispatch(createUser({ ...values, isAdmin: false }));
     }
   };
 
@@ -68,7 +70,7 @@ function Index() {
   };
 
   useEffect(() => {
-    dispatch(getUsersAdmin());
+    dispatch(getUsersCustomer());
   }, []);
 
   const handleClickAction =
@@ -111,9 +113,10 @@ function Index() {
       title: "Created Date",
       dataIndex: "createdAt",
       key: "createdAt",
-      isSearch: true,
+      // isSearch: true,
       width: "20%",
       render: (record) => record?.substring(0, 10),
+
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
       sortDirections: ["descend", "ascend", "descend"],
     },
@@ -163,7 +166,7 @@ function Index() {
       {contextHolder}
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box fontSize="22px" marginBottom="20px" fontWeight="bold">
-          Manage Adminstrator
+          Manage Customer
         </Box>
         <Button
           type="primary"
@@ -171,15 +174,14 @@ function Index() {
           size="middle"
           onClick={showModal}
         >
-          Add
+          Add Customer
         </Button>
       </Box>
 
-      <Table columns={columns} dataSource={usersAdmin?.user?.data} />
-      {isModalOpen &
-      (
+      <Table columns={columns} dataSource={usersCusomter?.user?.data} />
+      {isModalOpen && (
         <Modal
-          title={<H1>{editId ? "Edit" : "Add"} Administrator</H1>}
+          title={<H1>{editId ? "Edit" : "Add"} Customer</H1>}
           open={isModalOpen}
           onCancel={handleCancel}
           okText="Save"

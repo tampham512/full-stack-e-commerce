@@ -1,5 +1,4 @@
-import { getUserById } from "../../../../actions/userActions";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { listProductDetails } from "../../../../actions/productActions";
 import { Form, Input, Skeleton, Switch } from "antd";
 import React from "react";
 import { useEffect } from "react";
@@ -7,55 +6,60 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Box from "../../../../components/Box";
 import Button from "../../../components/Button";
-import { data } from "autoprefixer";
 
+const { TextArea } = Input;
 function Upsert(props) {
   const { onFinish, onCancel, erorrs, editId } = props;
   const dispatch = useDispatch();
 
-  const getUserByIdData = useSelector((state) => state.getUserById);
+  const productDetails = useSelector((state) => state.productDetails);
 
   const [form] = Form.useForm();
   useEffect(() => {
-    if (erorrs?.user?.status == 400) {
+    if (erorrs?.data?.status == 400) {
       form.setFields([
         {
-          name: "email",
-          errors: [erorrs?.user?.data.email],
+          name: "slug",
+          errors: [erorrs?.data?.data.email],
         },
       ]);
     }
   }, [erorrs]);
   useEffect(() => {
-    if (getUserByIdData?.user && editId) {
+    if (productDetails?.product && editId) {
       form.setFieldsValue({
-        name: getUserByIdData?.user.name,
-        email: getUserByIdData?.user.email,
-        password: getUserByIdData?.user.password,
-        numberPhone: getUserByIdData?.user.numberPhone,
-        address: getUserByIdData?.user?.address,
-        status: getUserByIdData?.user?.status ? true : false,
+        name: productDetails?.product.name,
+        slug: productDetails?.product.slug,
+        description: productDetails?.product.description,
+        status: productDetails?.product?.status ? true : false,
       });
     }
-  }, [getUserByIdData]);
+  }, [productDetails]);
+
   useEffect(() => {
     if (editId) {
-      console.log(editId);
-      dispatch(getUserById(editId));
+      dispatch(listProductDetails(editId));
     } else {
       form.setFieldsValue({
         name: "",
-        email: "",
-        password: "",
-        numberPhone: "",
-        address: "",
+        slug: "",
+        description: "",
         status: true,
       });
     }
   }, [editId]);
 
+  useEffect(() => {
+    form.setFieldsValue({
+      name: "",
+      slug: "",
+      description: "",
+      status: true,
+    });
+  }, []);
+
   return (
-    <Skeleton loading={editId && !getUserByIdData.user}>
+    <Skeleton loading={editId && !productDetails?.product}>
       <StyledUpsert>
         <Form
           onFinish={onFinish}
@@ -65,68 +69,43 @@ function Upsert(props) {
         >
           <Form.Item
             className="username"
-            label="Full Name"
+            label="Name"
             name="name"
             rules={[
               {
                 required: true,
-                message: "Please input your full name!",
+                message: "Please input name category!",
               },
             ]}
           >
-            <Input placeholder="Full Name" />
+            <Input placeholder="Name" />
           </Form.Item>
           <Form.Item
-            className="username"
-            label="Email"
-            name="email"
+            className="dataname"
+            label="slug"
+            name="slug"
             rules={[
               {
                 required: true,
-                message: "Please input your email!",
-              },
-              {
-                type: "email",
-                message: "Please input your email!",
+                message: "Please input slug category!",
               },
             ]}
             autoComplete={false}
           >
-            <Input placeholder="Email" />
+            <Input placeholder="Slug" />
           </Form.Item>
+
           <Form.Item
-            className="password"
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
+            className="description"
+            label="Description"
+            name="description"
           >
-            <Input.Password
-              placeholder="Password"
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-              autoComplete={false}
-            />
-          </Form.Item>
-          <Form.Item
-            className="username"
-            label="Number Phone"
-            name="numberPhone"
-          >
-            <Input placeholder="Number Phone" />
-          </Form.Item>
-          <Form.Item className="username" label="Address" name="address">
-            <Input placeholder="Address" />
+            <TextArea rows={4} placeholder="Description" />
           </Form.Item>
 
           {editId && (
             <Form.Item
-              className="username"
+              className="dataname"
               label="Status"
               name="status"
               valuePropName="checked"

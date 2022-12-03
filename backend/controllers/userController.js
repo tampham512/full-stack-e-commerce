@@ -105,7 +105,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updateUser.name,
       email: updateUser.email,
       numberPhone: updateUser.numberPhone,
-      numberPhone: updateUser.numberPhone,
       status: updateUser.status,
       isAdmin: updateUser.isAdmin,
       token: generateToken(updateUser._id),
@@ -137,10 +136,7 @@ const getUsersCustomer = asyncHandler(async (req, res) => {
 
   if (userCustomer) {
     res.json({
-      _id: userCustomer._id,
-      name: userCustomer.name,
-      email: userCustomer.email,
-      isAdmin: userCustomer.isAdmin,
+      data: userCustomer,
     });
   } else {
     res.status(404);
@@ -191,6 +187,63 @@ const createUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid user data");
   }
 });
+
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error("User Not Found");
+  }
+});
+
+const updateUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    // Check which fields were sent in the request else just keep them the same
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.address = req.body.address || user.address;
+    user.numberPhone = req.body.numberPhone || user.numberPhone;
+    user.status = req.body.status ?? user.status;
+
+    const userExists = await User.findOne({ email: user.email });
+
+    // If the user exists already
+
+    // Check if password was sent with request
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    if (userExists && req.body.email != user.email) {
+      res.status(201).json({
+        status: 400,
+        data: {
+          email: "Email already exists.",
+        },
+      });
+    }
+
+    const updateUser = await user.save();
+    res.status(201).json({
+      status: 200,
+      data: {
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        address: updateUser.address,
+        numberPhone: updateUser.numberPhone,
+        isAdmin: updateUser.isAdmin,
+      },
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 export {
   authUser,
   getUserProfile,
@@ -199,4 +252,6 @@ export {
   getUsersAdmin,
   getUsersCustomer,
   createUser,
+  getUserById,
+  updateUserById,
 };

@@ -42,15 +42,6 @@ function Upsert(props) {
     if (editId) {
       console.log(editId);
       dispatch(getUserById(editId));
-    } else {
-      form.setFieldsValue({
-        name: "",
-        email: "",
-        password: "",
-        numberPhone: "",
-        address: "",
-        status: true,
-      });
     }
   }, [editId]);
 

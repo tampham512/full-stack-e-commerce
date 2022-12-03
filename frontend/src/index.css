@@ -65,7 +65,7 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
-.ant-btn{
+.ant-btn,.ant-switch{
   line-height:unset !important;
   outline: none !important;
 }
@@ -78,4 +78,9 @@ h6 {
 }
 .bx{
   cursor: pointer;
+}
+.footer-modal-form{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
 }

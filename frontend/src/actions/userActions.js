@@ -204,12 +204,7 @@ export const getUsersAdmin = () => async (dispatch) => {
     const userInfo = localStorage.getItem("userInfo")
       ? JSON.parse(localStorage.getItem("userInfo"))
       : [];
-    console.log(
-      "🚀 ~ file: userActions.js:204 ~ getUsersAdmin ~ userInfo",
-      userInfo
-    );
-
-    // Header to send with the request
+    // der to send with the request
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -219,6 +214,33 @@ export const getUsersAdmin = () => async (dispatch) => {
 
     // Make request to server and get the response data
     const { data } = await axios.get(`/api/users/admin/users`, config);
+
+    // Dispatch user register success after making the request
+    dispatch({
+      type: USERS_ADMIN,
+      payload: data,
+    });
+  } catch (error) {}
+};
+
+export const getUsersCustomer = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: USERS_ADMIN,
+    });
+    const userInfo = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : [];
+    // der to send with the request
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // Make request to server and get the response data
+    const { data } = await axios.get(`/api/users/customer`, config);
 
     // Dispatch user register success after making the request
     dispatch({
@@ -269,6 +291,95 @@ export const createUser = (user) => async (dispatch, getState) => {
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
+    });
+  }
+};
+
+export const getUserById = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: "DATA_GET_USER_ID",
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    // Header to send with the request
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // Make request to server and get the response data
+
+    const { data } = await axios.get(`/api/users/${id}`, config);
+
+    // Dispatch user register success after making the request
+    dispatch({
+      type: "DATA_GET_USER_ID",
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DATA_GET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateUserById = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: DATA_GET,
+    });
+
+    // Get user login and user info
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    // Header to send with the request
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    // Make request to server and get the response data
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+
+    // Dispatch user register success after making the request
+    dispatch({
+      type: DATA_GET,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DATA_GET,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const resetData = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: "RESET_DATA",
+      payload: {},
+    });
+  } catch (error) {
+    dispatch({
+      type: "RESET_DATA",
+      payload: {},
     });
   }
 };
