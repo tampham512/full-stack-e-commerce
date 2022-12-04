@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const categorySchema = mongoose.Schema(
+export const categorySchema = mongoose.Schema(
   {
     name: {
       type: String,

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// import { categorySchema } from "./categoryModel";
 
 const reviewSchema = mongoose.Schema(
   {
@@ -25,24 +26,18 @@ const productSchema = mongoose.Schema(
     // ref is used to add relationship between the User and Product
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      // required: true,
       ref: "User",
     },
     name: {
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
-    brand: {
-      type: String,
-      required: true,
-    },
+    image: [{ src: { type: String } }],
+
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "category",
+      type: String,
+      // ref: "category",
       required: true,
     },
     description: {

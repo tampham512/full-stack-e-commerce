@@ -176,8 +176,7 @@ function Index() {
       </Box>
 
       <Table columns={columns} dataSource={usersAdmin?.user?.data} />
-      {isModalOpen &
-      (
+      {isModalOpen && (
         <Modal
           title={<H1>{editId ? "Edit" : "Add"} Administrator</H1>}
           open={isModalOpen}

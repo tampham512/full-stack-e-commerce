@@ -1,38 +1,60 @@
 import { listProductDetails } from "../../../../actions/productActions";
-import { Form, Input, Skeleton, Switch } from "antd";
-import React from "react";
+import {
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Row,
+  Select,
+  Skeleton,
+  Switch,
+  Upload,
+} from "antd";
+import React, { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Box from "../../../../components/Box";
 import Button from "../../../components/Button";
+import { getCategoryEnabled } from "../../../../actions/categoryActions";
 
 const { TextArea } = Input;
 function Upsert(props) {
+  const [fileList, setFileList] = useState([]);
   const { onFinish, onCancel, erorrs, editId } = props;
   const dispatch = useDispatch();
+  const listCategory = useSelector((state) => state.categoryList);
+  useEffect(() => {
+    dispatch(getCategoryEnabled());
+  }, []);
+  const listCategoryFomat = useMemo(() => {
+    return listCategory?.data?.data?.map((item) => ({
+      value: item._id,
+      label: item.name,
+    }));
+  }, [listCategory]);
 
   const productDetails = useSelector((state) => state.productDetails);
 
   const [form] = Form.useForm();
-  useEffect(() => {
-    if (erorrs?.data?.status == 400) {
-      form.setFields([
-        {
-          name: "slug",
-          errors: [erorrs?.data?.data.email],
-        },
-      ]);
-    }
-  }, [erorrs]);
+
   useEffect(() => {
     if (productDetails?.product && editId) {
       form.setFieldsValue({
         name: productDetails?.product.name,
-        slug: productDetails?.product.slug,
+        countInStock: productDetails?.product.slug,
+        price: productDetails?.product.price,
         description: productDetails?.product.description,
         status: productDetails?.product?.status ? true : false,
       });
+      const dataImg = productDetails?.product?.image?.map((item) => ({
+        uid: item._id,
+        name: item.src,
+        status: "done",
+        url: `/images/${item.src}`,
+      }));
+
+      setFileList(dataImg || []);
     }
   }, [productDetails]);
 
@@ -42,7 +64,8 @@ function Upsert(props) {
     } else {
       form.setFieldsValue({
         name: "",
-        slug: "",
+        price: 0,
+        countInStock: 0,
         description: "",
         status: true,
       });
@@ -52,67 +75,143 @@ function Upsert(props) {
   useEffect(() => {
     form.setFieldsValue({
       name: "",
-      slug: "",
+      price: 0,
+      countInStock: 0,
       description: "",
       status: true,
     });
   }, []);
+  const onSumbitForm = (values) => {
+    onFinish({ ...values, image: fileList });
+  };
+
+  const onChangeFile = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
 
   return (
     <Skeleton loading={editId && !productDetails?.product}>
       <StyledUpsert>
         <Form
-          onFinish={onFinish}
+          onFinish={onSumbitForm}
           layout="vertical"
           className="row-col"
           form={form}
         >
-          <Form.Item
-            className="username"
-            label="Name"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: "Please input name category!",
-              },
-            ]}
-          >
-            <Input placeholder="Name" />
-          </Form.Item>
-          <Form.Item
-            className="dataname"
-            label="slug"
-            name="slug"
-            rules={[
-              {
-                required: true,
-                message: "Please input slug category!",
-              },
-            ]}
-            autoComplete={false}
-          >
-            <Input placeholder="Slug" />
-          </Form.Item>
+          <Row gutter={[16, 0]}>
+            <Col className="gutter-row" span={12}>
+              <Form.Item
+                className="username"
+                label="Name"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input name product!",
+                  },
+                ]}
+              >
+                <Input placeholder="Name" />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" span={12}>
+              <Form.Item
+                className="dataname"
+                label="Category"
+                name="category"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input slug category!",
+                  },
+                ]}
+                autoComplete={false}
+              >
+                <Select
+                  name="category"
+                  size="large"
+                  showSearch
+                  placeholder="Select a category"
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.label ?? "")
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
+                  options={listCategoryFomat}
+                />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" span={12}>
+              <Form.Item
+                className="description"
+                label="Description"
+                name="description"
+              >
+                <TextArea rows={4} placeholder="Description" />
+              </Form.Item>
+            </Col>
+            <Col className="gutter-row" span={12}>
+              <Row gutter={[16, 24]}>
+                <Col className="gutter-row" span={12}>
+                  <Form.Item
+                    className="description"
+                    label="Price"
+                    name="price"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input price product!",
+                      },
+                    ]}
+                  >
+                    <InputNumber addonAfter="$" defaultValue={0} min={0} />
+                  </Form.Item>
+                </Col>
+                <Col className="gutter-row" span={12}>
+                  <Form.Item
+                    className="description"
+                    label="Count In Stock"
+                    name="countInStock"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input count in stock product!",
+                      },
+                    ]}
+                  >
+                    <InputNumber defaultValue={0} min={0} addonAfter="" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
 
-          <Form.Item
-            className="description"
-            label="Description"
-            name="description"
-          >
-            <TextArea rows={4} placeholder="Description" />
-          </Form.Item>
+            <Col className="gutter-row" span={12}>
+              <Form.Item className="description" label="Image" name="img">
+                <Upload
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  listType="picture-card"
+                  fileList={fileList}
+                  onChange={onChangeFile}
+                >
+                  {fileList.length < 4 && "+ Upload"}
+                </Upload>
+              </Form.Item>
+            </Col>
 
-          {editId && (
-            <Form.Item
-              className="dataname"
-              label="Status"
-              name="status"
-              valuePropName="checked"
-            >
-              <Switch />
-            </Form.Item>
-          )}
+            {editId && (
+              <Col className="gutter-row" span={12}>
+                <Form.Item
+                  className="dataname"
+                  label="Status"
+                  name="status"
+                  valuePropName="checked"
+                >
+                  <Switch />
+                </Form.Item>
+              </Col>
+            )}
+          </Row>
           <Box className="footer-modal-form">
             <Button onClick={onCancel}>Cancel</Button>
             <Button type="primary" className="ml-2" htmlType="submit">

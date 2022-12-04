@@ -44,7 +44,7 @@ export const getCategoryEnabled = () => async (dispatch) => {
     });
 
     // Make request to server and get the response data
-    const { data } = await axios.get(`/api/category/enabled`);
+    const { data } = await axios.get(`/api/category/enable`);
 
     // Dispatch user register success after making the request
     dispatch({

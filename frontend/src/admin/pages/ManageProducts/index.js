@@ -47,6 +47,29 @@ function Index() {
   }, [upsertProduct]);
 
   const handleOk = (values) => {
+    console.log("🚀 ~ file: index.js:50 ~ handleOk ~ values", values);
+    const formData = new FormData();
+    // values
+
+    formData.append("name", values.name);
+    formData.append("countInStock", values.countInStock);
+    formData.append("category", values.category);
+
+    formData.append("price", values.price);
+    formData.append("description", values.description);
+
+    formData.append("status", values.status);
+
+    console.log("🚀 ~ file: index.js:52 ~ handleOk ~ values", values.image);
+
+    if (values?.image?.length > 0) {
+      values.image.forEach((item, index) => {
+        if (item) {
+          formData.append("image", item.originFileObj, item.name);
+        }
+      });
+    }
+
     if (editId) {
       dispatch(
         updateProductById({
@@ -56,7 +79,7 @@ function Index() {
         })
       );
     } else {
-      dispatch(createProduct({ ...values }));
+      dispatch(createProduct(formData));
     }
     // setIsModalOpen(false);
   };

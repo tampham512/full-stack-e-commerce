@@ -59,7 +59,7 @@ export const getProductEnabled = () => async (dispatch) => {
     });
 
     // Make request to server and get the response data
-    const { data } = await axios.get(`/api/product/enabled`);
+    const { data } = await axios.get(`/api/products/enabled`);
 
     // Dispatch user register success after making the request
     dispatch({
@@ -83,13 +83,13 @@ export const createProduct = (user) => async (dispatch, getState) => {
     // Header to send with the request
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-type": "multipart/form-data",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
     // Make request to server and get the response data
-    const { data } = await axios.post(`/api/product`, user, config);
+    const { data } = await axios.post(`/api/products`, user, config);
 
     // Dispatch user register success after making the request
     dispatch({
@@ -127,7 +127,7 @@ export const updateProductById = (user) => async (dispatch, getState) => {
     };
 
     // Make request to server and get the response data
-    const { data } = await axios.put(`/api/product/${user._id}`, user, config);
+    const { data } = await axios.put(`/api/products/${user._id}`, user, config);
 
     // Dispatch user register success after making the request
     dispatch({

@@ -165,7 +165,6 @@ function Index() {
       ),
     },
   ];
-  console.log(listCategory);
   return (
     <Box backgroundColor="#fff" padding="20px">
       {contextHolder}

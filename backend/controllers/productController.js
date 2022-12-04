@@ -34,17 +34,27 @@ const createProduct = asyncHandler(async (req, res) => {
     countInStock,
     rating,
   } = req.body;
+  const files = req.files["image"];
+  console.log(image);
+  const newListImg = [];
+  if (files) {
+    files?.forEach((element, index) => {
+      console.log(element);
+      newListImg.push({
+        // uid: element.uid,
+        src: element.filename,
+      });
+    });
+  }
 
+  console.log(newListImg);
   const product = await Product.create({
     name,
-    image,
+    image: newListImg,
     description,
-    brand,
     category,
     price,
     countInStock,
-    rating,
-    numReviews,
   });
 
   // If the user is successfully created then send back user details in response
@@ -81,7 +91,7 @@ const updateProductById = asyncHandler(async (req, res) => {
     product.name = req.body.name || product.name;
     product.image = req.body.image || product.image;
     product.description = req.body.description || product.description;
-    product.brand = req.body.brand || product.brand;
+
     product.category = req.body.category || product.category;
     product.price = req.body.price ?? product.price;
     product.countInStock = req.body.countInStock ?? product.countInStock;
