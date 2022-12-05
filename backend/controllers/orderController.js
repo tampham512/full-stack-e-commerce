@@ -51,7 +51,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     if (orderItems) {
       orderItems.forEach(async (item) => {
-        const product = await Product.findById(item._id);
+        const product = await Product.findById(item.product);
 
         if (product) {
           product.countInStock = product.countInStock - item.qty;
