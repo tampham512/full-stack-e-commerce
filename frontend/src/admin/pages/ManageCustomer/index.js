@@ -113,7 +113,7 @@ function Index() {
       title: "Created Date",
       dataIndex: "createdAt",
       key: "createdAt",
-      // isSearch: true,
+
       width: "20%",
       render: (record) => record?.substring(0, 10),
 

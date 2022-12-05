@@ -141,7 +141,7 @@ function Index() {
       key: "createdAt",
       isSearch: true,
       width: "20%",
-      render: (record) => record.createdAt.substring(0, 10),
+      render: (record) => record.substring(0, 10),
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
       sortDirections: ["descend", "ascend", "descend"],
     },

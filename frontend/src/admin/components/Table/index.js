@@ -88,7 +88,7 @@ const Index = ({ dataSource, columns, props }) => {
           setTimeout(() => searchInput.current?.select(), 100);
         }
       },
-      render: (text) => text,
+      // render: (text) => text,
     };
   };
 

@@ -149,7 +149,10 @@ const Shipping = ({ history }) => {
                   <Row>
                     <Col md={3}>
                       <Badge count={item.qty}>
-                        <Image src={item.image} alt={item.name} />
+                        <Image
+                          src={`/images/${item?.image?.[0]?.src}`}
+                          alt={item.name}
+                        />
                       </Badge>
                     </Col>
                     <Col>

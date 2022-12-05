@@ -84,3 +84,8 @@ h6 {
   justify-content:flex-end;
   align-items:center;
 }
+.ant-modal-close-x{
+  display:flex !important;
+  justify-content:center;
+  align-items:center;
+}

@@ -33,6 +33,7 @@ import ManageAdministrator from "../admin/pages/ManageAdministrator";
 import ManageCustomer from "../admin/pages/ManageCustomer";
 import ManageCategory from "../admin/pages/ManageCategory";
 import ManageProducts from "../admin/pages/ManageProducts";
+import ManageOrder from "../admin/pages/ManageOrder";
 
 import Profile from "../admin/pages/Profile";
 import Rtl from "../admin/pages/Rtl";
@@ -121,6 +122,13 @@ const Routes = () => {
         path="/admin/products"
         roles={[RolesEnums.get("ADMIN")]}
         component={ManageProducts}
+        exact
+      />
+      <ProtectedRoute
+        typeLayout={TYPE_LAYOUT.DASHBOARD}
+        path="/admin/order"
+        roles={[RolesEnums.get("ADMIN")]}
+        component={ManageOrder}
         exact
       />
 

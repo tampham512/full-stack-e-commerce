@@ -48,17 +48,19 @@ const PlaceOrder = ({ history }) => {
       history.push(`/order/${order._id}`);
       dispatch({ type: ORDER_CREATE_RESET });
       dispatch({ type: USER_DETAILS_RESET });
+      localStorage.setItem("cartItems", []);
     }
     // eslint-disable-next-line
   }, [history, success]);
 
   const placeOrderHandler = () => {
     console.log("Placed order");
+
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
+        paymentMethod: "1",
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
@@ -84,7 +86,7 @@ const PlaceOrder = ({ history }) => {
               <h2>Shipping</h2>
               <p>
                 <strong>Address: </strong>
-                {cart.shippingAddress.postalCode}{" "} {cart.shippingAddress.address}
+                {cart.shippingAddress.postalCode} {cart.shippingAddress.address}
                 <p>
                   {`
                     ${cart.shippingAddress.postalCode} ${cart.shippingAddress.address}, 
@@ -108,9 +110,9 @@ const PlaceOrder = ({ history }) => {
                   {cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
-                        <Col md={1}>
+                        <Col md={2}>
                           <Image
-                            src={item.image}
+                            src={`/images/${item?.image?.[0]?.src}`}
                             alt={item.name}
                             fluid
                             rounded
