@@ -43,7 +43,7 @@ const Header = () => {
   return (
     <Navbar className="header" variant="dark" expand="lg" collapseOnSelect>
       <LinkContainer to="/">
-        <Navbar.Brand className="header-top">React E-Commerce</Navbar.Brand>
+        <Navbar.Brand className="header-top">Balo3T</Navbar.Brand>
       </LinkContainer>
       <ul className="header-nav">
         <li className="header-nav-items">
