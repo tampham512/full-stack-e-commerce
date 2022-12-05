@@ -40,9 +40,7 @@
 .username {
   position: relative;
 }
-.inputPass {
-  padding-right: 50px;
-}
+
 .iconEye {
   cursor: pointer;
   position: absolute;
@@ -63,58 +61,24 @@
   font-weight: 600;
   font-size: 16px;
 }
-:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-checked
-  .ant-checkbox-inner {
-  background-color: #1dc071;
+:where(.css-dev-only-do-not-override-3oxuke).ant-input:hover {
   border-color: #1dc071;
-  z-index: 2;
+  border-inline-end-width: 1px;
 }
-:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-wrapper:not(
-    .ant-checkbox-wrapper-disabled
-  ):hover
-  .ant-checkbox-inner,
-:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox:not(
-    .ant-checkbox-disabled
-  ):hover
-  .ant-checkbox-inner {
+:where(.css-dev-only-do-not-override-3oxuke).ant-input-affix-wrapper:not(
+    :where(
+        .css-dev-only-do-not-override-3oxuke
+      ).ant-input-affix-wrapper-disabled
+  ):hover {
   border-color: #1dc071;
 }
-:where(.css-dev-only-do-not-override-17p3bx5).ant-btn-primary:not(
+:where(.css-dev-only-do-not-override-3oxuke).ant-btn-primary:not(
     :disabled
   ):hover {
   color: #fff;
   background-color: #1dc071;
 }
-:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-wrapper-checked:not(
-    .ant-checkbox-wrapper-disabled
-  ):hover
-  .ant-checkbox-inner,
-:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-checked:not(
-    .ant-checkbox-disabled
-  ):hover
-  .ant-checkbox-inner {
-  background-color: #1dc071;
-  border-color: transparent;
-}
-:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox-wrapper:not(
-    .ant-checkbox-wrapper-disabled
-  ):hover
-  .ant-checkbox-inner,
-:where(.css-dev-only-do-not-override-17p3bx5).ant-checkbox:not(
-    .ant-checkbox-disabled
-  ):hover
-  .ant-checkbox-inner {
-  border-color: #1dc071;
-}
-button:focus {
-  outline: none;
-}
-:where(.css-dev-only-do-not-override-17p3bx5).ant-btn:not(
-    :disabled
-  ):focus-visible {
-  outline: 4px solid #1dc071;
-}
-:where(.css-dev-only-do-not-override-17p3bx5).ant-input:focus,
-:where(.css-dev-only-do-not-override-17p3bx5).ant-input-focused {
-  border-color: #1dc071;
+:where(.css-dev-only-do-not-override-3oxuke).ant-input-affix-wrapper
+  .anticon.ant-input-password-icon {
+  font-size: 20px;
 }
