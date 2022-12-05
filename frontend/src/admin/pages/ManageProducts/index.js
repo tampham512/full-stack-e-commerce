@@ -57,11 +57,7 @@ function Index() {
 
     formData.append("price", values.price);
     formData.append("description", values.description);
-
-    formData.append("status", values.status);
-
-    console.log("🚀 ~ file: index.js:52 ~ handleOk ~ values", values.image);
-
+    console.log(values.image);
     if (values?.image?.length > 0) {
       values.image.forEach((item, index) => {
         if (item) {
@@ -71,13 +67,9 @@ function Index() {
     }
 
     if (editId) {
-      dispatch(
-        updateProductById({
-          ...values,
-          _id: editId,
-          status: values.status ? 1 : 0,
-        })
-      );
+      formData.append("_id", editId);
+      formData.append("status", values.status ? 1 : 0);
+      dispatch(updateProductById(editId, formData));
     } else {
       dispatch(createProduct(formData));
     }

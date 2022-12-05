@@ -107,40 +107,41 @@ export const createProduct = (user) => async (dispatch, getState) => {
   }
 };
 
-export const updateProductById = (user) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: "PRODUCT_UP_SERT",
-    });
+export const updateProductById =
+  (editId, user) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: "PRODUCT_UP_SERT",
+      });
 
-    // Get user login and user info
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      // Get user login and user info
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    // Header to send with the request
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      // Header to send with the request
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    // Make request to server and get the response data
-    const { data } = await axios.put(`/api/products/${user._id}`, user, config);
+      // Make request to server and get the response data
+      const { data } = await axios.put(`/api/products/${editId}`, user, config);
 
-    // Dispatch user register success after making the request
-    dispatch({
-      type: "PRODUCT_UP_SERT",
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: "GET_PRODUCT_ID",
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      // Dispatch user register success after making the request
+      dispatch({
+        type: "PRODUCT_UP_SERT",
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: "GET_PRODUCT_ID",
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
