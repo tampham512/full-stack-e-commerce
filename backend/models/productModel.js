@@ -36,8 +36,8 @@ const productSchema = mongoose.Schema(
     image: [{ src: { type: String } }],
 
     category: {
-      type: String,
-      // ref: "category",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     description: {

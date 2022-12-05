@@ -129,11 +129,35 @@ function Index() {
       isSearch: true,
     },
     {
-      title: "Slug",
-      dataIndex: "slug",
-      key: "slug",
+      title: "Category Name",
+      dataIndex: "name",
+      key: "name",
+      width: "30%",
+      render: (_, record) => record?.category?.name,
+      sorter: (a, b) => a?.category?.name.localeCompare(b?.category?.name),
+
+      sortDirections: ["descend", "ascend", "descend"],
+    },
+    {
+      title: "Count In Stock",
+      dataIndex: "countInStock",
+      key: "countInStock",
       width: "20%",
-      isSearch: true,
+      sorter: (a, b) => a.countInStock - b.countInStock,
+    },
+    {
+      title: "Reviews",
+      dataIndex: "numReviews",
+      key: "numReviews",
+      width: "20%",
+      sorter: (a, b) => a.numReviews - b.numReviews,
+    },
+    {
+      title: "Rating",
+      dataIndex: "rating",
+      key: "rating",
+      width: "20%",
+      sorter: (a, b) => a.rating - b.rating,
     },
     {
       title: "Created Date",
@@ -142,7 +166,9 @@ function Index() {
       isSearch: true,
       width: "20%",
       render: (record) => record.substring(0, 10),
-      sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+
+      sorter: (a, b) => a?.createdAt.localeCompare(b?.createdAt),
+
       sortDirections: ["descend", "ascend", "descend"],
     },
 
@@ -150,7 +176,7 @@ function Index() {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      sorter: (a, b) => a.status.length - b.status.length,
+      sorter: (a, b) => a?.status.localeCompare(b?.status),
       sortDirections: ["descend", "ascend"],
       render: (_, { status }) =>
         status == 1 ? (

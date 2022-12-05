@@ -6,7 +6,7 @@ import asyncHandler from "express-async-handler"; // Middleware to handle except
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
   // Get all the products from MongoDB
-  const products = await Product.find({});
+  const products = await Product.find({}).populate("category");
   res.json(products);
 });
 
@@ -71,7 +71,7 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const getProductEnable = asyncHandler(async (req, res) => {
-  const product = await Product.find({ status: 1 });
+  const product = await Product.find({ status: 1 }).populate("category");
 
   if (product) {
     res.json({
