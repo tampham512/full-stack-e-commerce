@@ -23,7 +23,10 @@
 .register-link {
   font-weight: 500;
   font-size: 14px;
-  color: #1dc071;
+  color: #f67385;
+}
+.register-link:hover {
+  color: #d74155;
 }
 .inputPass,
 .inputUser {
@@ -56,7 +59,7 @@
   justify-content: end;
 }
 .loginBtn {
-  background: #1dc071;
+  background: #f67385;
   height: 42px;
   font-weight: 600;
   font-size: 16px;
@@ -81,4 +84,10 @@
 :where(.css-dev-only-do-not-override-3oxuke).ant-input-affix-wrapper
   .anticon.ant-input-password-icon {
   font-size: 20px;
+}
+:where(.css-dev-only-do-not-override-1qhh31y).ant-btn-primary:not(
+    :disabled
+  ):hover {
+  color: #fff;
+  background-color: #d74155;
 }

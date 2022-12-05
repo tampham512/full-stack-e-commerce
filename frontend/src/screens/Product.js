@@ -13,7 +13,7 @@ import {
   Form,
 } from "react-bootstrap";
 
-import { Button as Bt } from "antd";
+import { Button as Bt, Rate } from "antd";
 // Components
 import Rating from "../components/Rating";
 // Redux Actions
@@ -22,12 +22,16 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import styled from "styled-components";
 import Product from "../components/Product";
+import "../styles/products.css";
+import "../styles/product.css";
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch();
   // Grab the data from the state
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+  const element = products.sort(() => Math.random() - Math.random());
+  console.log(element);
 
   // Whatever is put inside the useEffect function will run as soon as the component loads.
   useEffect(() => {
@@ -59,96 +63,101 @@ const ProductScreen = ({ history, match }) => {
   };
   return (
     <>
-      <Link className="btn btn-secondary my-3" to="/">
-        Go Back
-      </Link>
       {loadingDetail ? (
         <Loader />
       ) : errorDetail ? (
         <Message variant="danger">{errorDetail}</Message>
       ) : (
         <>
-          <Wrapper>
-            <Row>
-              <Col md={5}>
-                <Image src={product.image} alt={product.name} fluid></Image>
-              </Col>
-              <Col md={7}>
-                <div className="info">
-                  <h3>{product.name}</h3>
-                  <p>
-                    <span className="price">${product.price}</span>
-                  </p>
-                  <div>
-                    <span>
-                      {product.countInStock > 0
-                        ? `Available: ${product.countInStock} In Stock`
-                        : "Out of Stock"}{" "}
-                    </span>
+          <div className="products">
+            <div className="products-image">
+              <img
+                src={`/images/${product?.image?.[0]?.src}`}
+                alt={product.name}
+              ></img>
+              <div className="products-subImage">
+                {product?.image?.map((item) => (
+                  <img key={item.src} src={`/images/${item?.src}`} alt="" />
+                ))}
+              </div>
+            </div>
+            <div className="products-content">
+              <h3 className="products-content-name">{product.name}</h3>
+              <div className="products-content-info">
+                <Rate disabled defaultValue={product?.rating} />
+              </div>
+              <span className="price">${product.price}</span>
+              <div className="describe">
+                <p>{product.description}</p>
+              </div>
+              <div className="quantity">
+                <div className="quantity-top">
+                  <div className="minus" onClick={(e) => handleMinus(e)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="quantity-icons w-2 h-2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 12h-15"
+                      />
+                    </svg>
+                  </div>
+                  <div className="qty">{qty}</div>
+                  <div className="plus" onClick={(e) => handlePlus(e)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className=" quantity-icons w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                      />
+                    </svg>
                   </div>
                 </div>
-                <div className="describe">
-                  <p>{product.description}</p>
-                </div>
-                <Row>
-                  <Col md={2}>
-                    <Quantity className="control-qty">
-                      <div className="minus" onClick={(e) => handleMinus(e)}>
-                        <span>-</span>
-                      </div>
-                      <div>{qty}</div>
-                      <div className="plus" onClick={(e) => handlePlus(e)}>
-                        <span>+</span>
-                      </div>
-                    </Quantity>
-                  </Col>
-                  <Col md={8}>
-                    <Bt
-                      disabled={product.countInStock === 0}
-                      type="primary"
-                      danger
-                      onClick={addToCartHandler}
-                    >
-                      ADD TO CART
-                    </Bt>{" "}
-                  </Col>
-                </Row>
-                <div className="category">
-                  <p>Category: {product.category}</p>
-                </div>
-              </Col>
-            </Row>
-          </Wrapper>
-          <Row>
-            <>
-              <div className="advertise-product" style={{marginBottom:"-20px"}}>
-                <div>
-                  <h3>RELATED PRODUCTS</h3>
+                <div className="quantity-bottom">
+                  <span>
+                    {product.countInStock > 0
+                      ? `${product.countInStock} pieces available`
+                      : "Out of Stock"}{" "}
+                  </span>
                 </div>
               </div>
-              <Row md={4}>
-                {products.slice(0, 4).map((product) => (
-                  <Col key={product._id} sm>
-                    <Product product={product} />
-                  </Col>
-                ))}
-              </Row>
-            </>
-          </Row>
-          <Row>
-            <>
-              <div className="advertise-product" style={{marginBottom:"-20px"}}>
-                <h3>CUSTOM COLLECTION</h3>
-              </div>
-              <Row md={4}>
-                {products.slice(0, 4).map((product) => (
-                  <Col key={product._id} sm>
-                    <Product product={product} />
-                  </Col>
-                ))}
-              </Row>
-            </>
-          </Row>
+              <button
+                className="btn-addCart"
+                disabled={product.countInStock === 0}
+                type="primary"
+                danger
+                onClick={addToCartHandler}
+              >
+                ADD TO CART
+              </button>
+            </div>
+          </div>
+          <div className="relatedProducts">
+            <h2>Related products</h2>
+            <div className="relatedProducts-content">
+              {element.slice(0, 4).map((product) => (
+                <div
+                  className="relatedProducts-content-items"
+                  key={product._id}
+                >
+                  <Product product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
         </>
       )}
     </>
@@ -156,57 +165,3 @@ const ProductScreen = ({ history, match }) => {
 };
 
 export default ProductScreen;
-
-const Quantity = styled.div`
-  display: flex;
-  padding-top: 5px;
-  div {
-    background-color: rgba(255, 255, 255);
-    width: 30px;
-    border: 1px solid #000;
-    height: 30px;
-    text-align: center;
-    line-height: 30px;
-    cursor: pointer;
-  }
-
-  .plus {
-    border-radius: 0 3px 3px 0;
-  }
-  .minus {
-    border-radius: 3px 0 0 3px;
-  }
-`;
-
-const Wrapper = styled.div`
-  h3 {
-    font-size: 34px;
-    font-weight: 400;
-    line-height: 28px;
-    margin-bottom: 10px;
-    color: #000;
-  }
-
-  .price {
-    font-size: 24px;
-  }
-
-  .describe {
-    border-bottom: 1px solid #e1e1e1;
-    border-top: 1px solid #e1e1e1;
-    clear: both;
-    margin: 25px 0;
-    padding: 19px 0;
-    word-wrap: break-word;
-
-    p {
-      font-size: 15px;
-      line-height: 24px;
-      font-weight: 400;
-    }
-  }
-
-  .category {
-    margin-top: 20px;
-  }
-`;

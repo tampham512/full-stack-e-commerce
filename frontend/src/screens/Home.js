@@ -81,14 +81,7 @@ const Home = () => {
               </div>
             </Advertise>
             <Row md={4}>
-              {products.slice(0, 4).map((product) => (
-                <Col key={product._id} sm>
-                  <Product product={product} />
-                </Col>
-              ))}
-            </Row>
-            <Row md={4}>
-              {products.slice(2, 6).map((product) => (
+              {products.slice(0, 8).map((product) => (
                 <Col key={product._id} sm>
                   <Product product={product} />
                 </Col>
