@@ -28,10 +28,15 @@ function Upsert(props) {
     dispatch(getCategoryEnabled());
   }, []);
   const listCategoryFomat = useMemo(() => {
-    return listCategory?.data?.data?.map((item) => ({
-      value: item._id,
-      label: item.name,
-    }));
+    if (listCategory?.data?.data) {
+      const listCategoryNew = listCategory?.data?.data?.map((item) => ({
+        value: item._id,
+        label: item.name,
+      }));
+
+      return [{ value: -1, label: "Select Catgeory" }, ...listCategoryNew];
+    }
+    return [{ value: "", label: "Select Catgeory" }];
   }, [listCategory]);
 
   const productDetails = useSelector((state) => state.productDetails);
@@ -46,6 +51,8 @@ function Upsert(props) {
         price: productDetails?.product.price,
         description: productDetails?.product.description,
         status: productDetails?.product?.status ? true : false,
+        category: productDetails?.product.category,
+        countInStock: productDetails?.product.countInStock,
       });
       const dataImg = productDetails?.product?.image?.map((item) => ({
         uid: item._id,
@@ -68,6 +75,7 @@ function Upsert(props) {
         countInStock: 0,
         description: "",
         status: true,
+        category: "",
       });
     }
   }, [editId]);
@@ -152,7 +160,7 @@ function Upsert(props) {
               </Form.Item>
             </Col>
             <Col className="gutter-row" span={12}>
-              <Row gutter={[16, 24]}>
+              <Row gutter={[16, 0]}>
                 <Col className="gutter-row" span={12}>
                   <Form.Item
                     className="description"
@@ -180,16 +188,28 @@ function Upsert(props) {
                       },
                     ]}
                   >
-                    <InputNumber defaultValue={0} min={0} addonAfter="" />
+                    <InputNumber defaultValue={0} min={0} minWidth={100} />
                   </Form.Item>
                 </Col>
+                {editId && (
+                  <Col className="gutter-row" span={12}>
+                    <Form.Item
+                      className="dataname"
+                      label="Status"
+                      name="status"
+                      valuePropName="checked"
+                    >
+                      <Switch />
+                    </Form.Item>
+                  </Col>
+                )}
               </Row>
             </Col>
 
             <Col className="gutter-row" span={12}>
               <Form.Item className="description" label="Image" name="img">
                 <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                   listType="picture-card"
                   fileList={fileList}
                   onChange={onChangeFile}
@@ -198,19 +218,6 @@ function Upsert(props) {
                 </Upload>
               </Form.Item>
             </Col>
-
-            {editId && (
-              <Col className="gutter-row" span={12}>
-                <Form.Item
-                  className="dataname"
-                  label="Status"
-                  name="status"
-                  valuePropName="checked"
-                >
-                  <Switch />
-                </Form.Item>
-              </Col>
-            )}
           </Row>
           <Box className="footer-modal-form">
             <Button onClick={onCancel}>Cancel</Button>

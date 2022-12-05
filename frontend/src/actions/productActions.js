@@ -135,6 +135,7 @@ export const updateProductById =
       dispatch({
         type: "PRODUCT_UP_SERT",
       });
+      console.log("v");
 
       // Get user login and user info
       const {

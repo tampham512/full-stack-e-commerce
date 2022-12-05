@@ -35,7 +35,7 @@ const createProduct = asyncHandler(async (req, res) => {
     rating,
   } = req.body;
   const files = req.files["image"];
-  console.log(image);
+
   const newListImg = [];
   if (files) {
     files?.forEach((element, index) => {
@@ -47,7 +47,6 @@ const createProduct = asyncHandler(async (req, res) => {
     });
   }
 
-  console.log(newListImg);
   const product = await Product.create({
     name,
     image: newListImg,
@@ -89,7 +88,7 @@ const updateProductById = asyncHandler(async (req, res) => {
 
   if (product) {
     product.name = req.body.name || product.name;
-    product.image = req.body.image || product.image;
+
     product.description = req.body.description || product.description;
 
     product.category = req.body.category || product.category;
@@ -98,6 +97,20 @@ const updateProductById = asyncHandler(async (req, res) => {
     product.rating = req.body.rating ?? product.rating;
     product.numReviews = req.body.numReviews ?? product.numReviews;
     product.status = req.body.status ?? product.status;
+    const files = req.files["image"];
+
+    const newListImg = [];
+    if (files) {
+      files?.forEach((element, index) => {
+        newListImg.push({
+          src: element.filename,
+        });
+      });
+    }
+
+    product.image = [...newListImg, ...product.image]
+      ?.slice(0, 4)
+      ?.sort((a, b) => a.src?.localeCompare(b?.src));
 
     const productUp = await product.save();
 

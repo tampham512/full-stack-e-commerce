@@ -32,6 +32,7 @@ import {
   StarOutlined,
   TwitterOutlined,
   FacebookFilled,
+  LogoutOutlined,
 } from "@ant-design/icons";
 
 import { NavLink, Link } from "react-router-dom";
@@ -294,7 +295,7 @@ function Header({
           </div> */}
         </Col>
         <Col span={24} md={18} className="header-control">
-          <Badge size="small" count={4}>
+          {/* <Badge size="small" count={4}>
             <Dropdown overlay={menu} trigger={["click"]}>
               <a
                 href="#pablo"
@@ -421,11 +422,10 @@ function Header({
                 </div>
               </div>
             </div>
-          </Drawer>
-          <Link to="/sign-in" className="btn-sign-in">
+          </Drawer> */}
+          <Link to="/" className="btn-sign-in">
             <Box display="flex">
-              {profile}
-              <span>Sign in</span>
+              <LogoutOutlined />
             </Box>
           </Link>
           <Input

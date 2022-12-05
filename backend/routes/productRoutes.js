@@ -19,7 +19,13 @@ router.route("/:id").get(getProductById);
 
 router.route("/enable").get(getProductEnable);
 
-router.route("/:id").put(protect, updateProductById);
+router
+  .route("/:id")
+  .put(
+    protect,
+    upload.fields([{ name: "image", maxCount: 4 }]),
+    updateProductById
+  );
 
 router.route("/delete/:id").delete(deleteProductById);
 

@@ -52,6 +52,7 @@ function Index() {
   const handleOk = (values) => {
     const formData = new FormData();
     // values
+    console.log("🚀 ~ file: index.js:72 ~ handleOk ~ editId", editId);
 
     formData.append("name", values.name);
     formData.append("countInStock", values.countInStock);
@@ -59,18 +60,17 @@ function Index() {
 
     formData.append("price", values.price);
     formData.append("description", values.description);
+    formData.append("status", values.status ? 1 : 0);
     console.log(values.image);
     if (values?.image?.length > 0) {
       values.image.forEach((item, index) => {
-        if (item) {
-          formData.append("image", item.originFileObj, item.name);
+        if (item && item?.originFileObj) {
+          formData.append("image", item?.originFileObj, item?.name);
         }
       });
     }
 
     if (editId) {
-      formData.append("_id", editId);
-      formData.append("status", values.status ? 1 : 0);
       dispatch(updateProductById(editId, formData));
     } else {
       dispatch(createProduct(formData));
