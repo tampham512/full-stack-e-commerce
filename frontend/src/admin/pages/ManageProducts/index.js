@@ -9,6 +9,7 @@ import {
   listProducts,
   updateProductById,
   createProduct,
+  deleteProductById,
 } from "../../../actions/productActions";
 
 import { PlusOutlined } from "@ant-design/icons";
@@ -17,15 +18,17 @@ import { Dropdown, Menu, message, Modal, Popover, Tag } from "antd";
 import H1 from "../../components/Heading/H1";
 import Upsert from "./components/Upsert";
 import useUpdateEffect from "../../../hook/useUpdateEffect";
+import ModalDelete from "../../components/Modal/ModalDelete";
 
 function Index() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  console.log("🚀 ~ file: index.js:24 ~ Index ~ productList", productList);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editId, setEditId] = useState("");
 
+  const [editId, setEditId] = useState("");
+  const [deleteId, setDeleteId] = useState("");
+  const [isModalDelete, setIsModalDelete] = useState(false);
   const upsertProduct = useSelector((state) => state.upsertProduct);
 
   const [messageApi, contextHolder] = message.useMessage();
@@ -47,7 +50,6 @@ function Index() {
   }, [upsertProduct]);
 
   const handleOk = (values) => {
-    console.log("🚀 ~ file: index.js:50 ~ handleOk ~ values", values);
     const formData = new FormData();
     // values
 
@@ -59,8 +61,6 @@ function Index() {
     formData.append("description", values.description);
 
     formData.append("status", values.status);
-
-    console.log("🚀 ~ file: index.js:52 ~ handleOk ~ values", values.image);
 
     if (values?.image?.length > 0) {
       values.image.forEach((item, index) => {
@@ -81,14 +81,21 @@ function Index() {
     } else {
       dispatch(createProduct(formData));
     }
+
     // setIsModalOpen(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsModalDelete(false);
     setEditId("");
   };
-
+  const handleDelete = () => {
+    dispatch(deleteProductById(deleteId));
+    dispatch(listProducts());
+    setIsModalDelete(false);
+    messageApi.open({ type: "success", content: "Success", duration: 3 });
+  };
   useEffect(() => {
     dispatch(listProducts());
   }, []);
@@ -100,6 +107,10 @@ function Index() {
         case "edit":
           setEditId(_id);
           setIsModalOpen(true);
+          break;
+        case "delete":
+          setDeleteId(_id);
+          setIsModalDelete(true);
           break;
       }
     };
@@ -203,7 +214,19 @@ function Index() {
           Add Product
         </Button>
       </Box>
-
+      <Modal
+        open={isModalDelete}
+        onCancel={handleCancel}
+        okText="Save"
+        cancelText="Cancel"
+        footer={false}
+        width="460px"
+      >
+        <ModalDelete
+          onCancel={handleCancel}
+          onDelete={handleDelete}
+        ></ModalDelete>
+      </Modal>
       <Table columns={columns} dataSource={productList?.products} />
       {isModalOpen && (
         <Modal

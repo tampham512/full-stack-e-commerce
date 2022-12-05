@@ -5,6 +5,7 @@ import {
   getProductEnable,
   updateProductById,
   createProduct,
+  deleteProductById,
 } from "../controllers/productController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { upload } from "../middleware/uploadFile.js";
@@ -19,6 +20,8 @@ router.route("/:id").get(getProductById);
 router.route("/enable").get(getProductEnable);
 
 router.route("/:id").put(protect, updateProductById);
+
+router.route("/delete/:id").delete(deleteProductById);
 
 router
   .route("/")

@@ -4,6 +4,7 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
+  PRODUCT_REMOVE_ITEM,
   PRODUCT_DETAILS_SUCCESS,
 } from "../constants/productConstants";
 import axios from "axios";
@@ -51,6 +52,27 @@ export const listProductDetails = (id) => async (dispatch) => {
     });
   }
 };
+export const deleteProductById = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "PRODUCT_REMOVE_ITEM",
+      payload: {},
+    });
+
+    // Make request to server and get the response data
+    const { data } = await axios.delete(`/api/products/delete/${id}`);
+
+    console.log(data);
+    // Dispatch user register success after making the request
+    dispatch({
+      type: "PRODUCT_REMOVE_ITEM",
+      payload: data,
+    });
+  } catch (error) {
+    console.log("bui Chi Thong");
+  }
+};
+
 export const getProductEnabled = () => async (dispatch) => {
   try {
     dispatch({

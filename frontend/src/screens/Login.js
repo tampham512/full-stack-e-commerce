@@ -34,19 +34,16 @@ const Login = ({ location, history }) => {
   }, [history, userInfo, redirect]);
 
   // Handler that logs in the user
+
   const submitHandler = (values) => {
     // e.preventDefault();
-
     // Dispatch login
     dispatch(login(values.email, values.password));
+    console.log(values);
   };
 
   return (
     <LayoutAuthentication>
-      <div className="layout-error">
-        {error && <Message variant="danger">{error}</Message>}
-        {loading && <Loader />}
-      </div>
       <SignIn onSubmit={submitHandler} />
     </LayoutAuthentication>
   );
