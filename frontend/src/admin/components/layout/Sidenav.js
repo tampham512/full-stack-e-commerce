@@ -154,7 +154,7 @@ function Sidenav({ color }) {
     <>
       <Box className="brand" display="flex">
         <img src={logo} alt="" />
-        <span>Admin Master Shop</span>
+        <span>Admin Master balo3T</span>
       </Box>
       <hr />
       <Menu theme="light" mode="inline">
@@ -239,9 +239,9 @@ function Sidenav({ color }) {
             <span className="label">Order</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item className="menu-item-header" key="5">
+ {/*        <Menu.Item className="menu-item-header" key="5">
           Account Pages
-        </Menu.Item>
+        </Menu.Item> */}{/* 
         <Menu.Item key="6">
           <NavLink to="/admin/order">
             <span
@@ -266,7 +266,7 @@ function Sidenav({ color }) {
             <span className="icon">{signup}</span>
             <span className="label">Sign Up</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
       {/* <div className="aside-footer">
         <div
