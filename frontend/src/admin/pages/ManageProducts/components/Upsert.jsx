@@ -51,7 +51,7 @@ function Upsert(props) {
         price: productDetails?.product.price,
         description: productDetails?.product.description,
         status: productDetails?.product?.status ? true : false,
-        category: productDetails?.product.category,
+        category: productDetails?.product?.category?._id,
         countInStock: productDetails?.product.countInStock,
       });
       const dataImg = productDetails?.product?.image?.map((item) => ({

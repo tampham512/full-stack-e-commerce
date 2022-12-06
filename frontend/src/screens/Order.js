@@ -11,10 +11,31 @@ import { ORDER_PAY_RESET } from "../constants/orderConstants";
 // Get order details actions
 import { getOrderDetails, payOrder } from "../actions/orderActions";
 import Box from "../components/Box";
+import { message, Modal } from "antd";
+import H1 from "../admin/components/Heading/H1";
+import FormReview from "../components/FormReview";
+import { reviewProductById } from "../actions/productActions";
+import useUpdateEffect from "../hook/useUpdateEffect";
 
 const Order = ({ match, history }) => {
   // Get order id parameter from URL
   const orderId = match.params.id;
+
+  const upsertProduct = useSelector((state) => state.upsertProduct);
+
+  const [messageApi, contextHolder] = message.useMessage();
+  const [idProductReview, setIdProductReview] = useState("");
+
+  useUpdateEffect(() => {
+    if (upsertProduct?.data?.status == 200) {
+      messageApi.open({
+        type: "success",
+        content: "Review Success!",
+        duration: 3,
+      });
+      setIdProductReview("");
+    }
+  }, [upsertProduct]);
 
   // Boolean used to determine if the PayPal SDK has loaded
   const [sdkReady, setSdkReady] = useState(false);
@@ -55,13 +76,17 @@ const Order = ({ match, history }) => {
     // Update status of order to paid
     dispatch(payOrder(orderId, paymentResult));
   };
-
+  const handleOk = (values) => {
+    console.log(values);
+    dispatch(reviewProductById(idProductReview, values));
+  };
   return loading ? (
     <Loader />
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
     <>
+      {contextHolder}
       <h1>Order {orderId}</h1>
       <Row>
         <Col md={8}>
@@ -134,6 +159,20 @@ const Order = ({ match, history }) => {
                           {item.qty} x $ {item.price} = ${" "}
                           {item.qty * item.price}
                         </Col>
+                        {order.isDelivered && (
+                          <Box
+                            onClick={() => {
+                              setIdProductReview(item.product);
+                            }}
+                          >
+                            <Message
+                              variant="success"
+                              style={{ padding: "4px" }}
+                            >
+                              Review
+                            </Message>
+                          </Box>
+                        )}
                       </Row>
                     </ListGroup.Item>
                   ))}
@@ -192,6 +231,26 @@ const Order = ({ match, history }) => {
           </Card>
         </Col>
       </Row>
+      {idProductReview && (
+        <Modal
+          title={<H1>Review</H1>}
+          open={idProductReview}
+          onCancel={() => {
+            setIdProductReview("");
+          }}
+          okText="Save"
+          cancelText="Cancel"
+          footer={false}
+        >
+          <FormReview
+            onCancel={() => {
+              setIdProductReview("");
+            }}
+            onFinish={handleOk}
+            idProductReview={idProductReview}
+          />
+        </Modal>
+      )}
     </>
   );
 };

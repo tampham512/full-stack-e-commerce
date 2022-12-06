@@ -6,7 +6,10 @@ import asyncHandler from "express-async-handler"; // Middleware to handle except
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
   // Get all the products from MongoDB
-  const products = await Product.find({}).populate("category");
+  const products = await Product.find({})
+    .populate("category")
+    .populate({ path: "reviews", populate: { path: "user" } });
+
   res.json(products);
 });
 
@@ -14,7 +17,9 @@ const getProducts = asyncHandler(async (req, res) => {
 // @route GET /api/product/:id
 // @access Public
 const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id)
+    .populate("category")
+    .populate({ path: "reviews", populate: { path: "user" } });
   if (product) {
     res.json(product);
   } else {
@@ -71,7 +76,9 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const getProductEnable = asyncHandler(async (req, res) => {
-  const product = await Product.find({ status: 1 }).populate("category");
+  const product = await Product.find({ status: 1 })
+    .populate("category")
+    .populate({ path: "reviews", populate: { path: "user" } });
 
   if (product) {
     res.json({
@@ -132,6 +139,39 @@ const deleteProductById = asyncHandler(async (req, res) => {
     throw new Error("Product Not Found");
   }
 });
+const reviewProductById = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    product.rating = (
+      product?.reviews?.reduce(
+        (accumulator, item) => accumulator + Number(item.rating),
+        req.body.rating
+      ) /
+      (product?.reviews?.length + 1)
+    ).toFixed(1);
+
+    product.numReviews = product.numReviews + 1;
+    product.reviews = [
+      ...product.reviews,
+      {
+        user: req.body.user,
+        comment: req.body.comment || "",
+        rating: req.body.rating || 0,
+      },
+    ];
+
+    const productUp = await product.save();
+
+    res.status(201).json({
+      status: 200,
+      data: productUp,
+    });
+  } else {
+    res.status(404);
+    throw new Error("Category not found");
+  }
+});
 export {
   getProducts,
   getProductById,
@@ -139,4 +179,5 @@ export {
   getProductEnable,
   updateProductById,
   deleteProductById,
+  reviewProductById,
 };

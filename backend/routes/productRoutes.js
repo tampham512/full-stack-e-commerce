@@ -6,6 +6,7 @@ import {
   updateProductById,
   createProduct,
   deleteProductById,
+  reviewProductById,
 } from "../controllers/productController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { upload } from "../middleware/uploadFile.js";
@@ -36,5 +37,6 @@ router
     upload.fields([{ name: "image", maxCount: 4 }]),
     createProduct
   );
+router.route("/review/:id").put(protect, reviewProductById);
 
 export default router;

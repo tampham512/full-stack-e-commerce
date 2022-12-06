@@ -168,3 +168,51 @@ export const updateProductById =
       });
     }
   };
+
+export const reviewProductById =
+  (editId, dataReview) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: "PRODUCT_UP_SERT",
+      });
+
+      // Get user login and user info
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      console.log("🚀 ~ file: productActions.js:183 ~ userInfo", userInfo);
+
+      // Header to send with the request
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      // Make request to server and get the response data
+      const dataReviewObject = { ...dataReview, user: userInfo._id };
+      console.log(
+        "🚀 ~ file: productActions.js:196 ~ dataReview",
+        dataReviewObject
+      );
+      const { data } = await axios.put(
+        `/api/products/review/${editId}`,
+        dataReviewObject,
+        config
+      );
+
+      // Dispatch user register success after making the request
+      dispatch({
+        type: "PRODUCT_UP_SERT",
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: "GET_PRODUCT_ID",
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
