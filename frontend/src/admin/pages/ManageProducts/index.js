@@ -17,6 +17,8 @@ import Button from "../../components/Button";
 import { Dropdown, Menu, message, Modal, Popover, Tag } from "antd";
 import H1 from "../../components/Heading/H1";
 import Upsert from "./components/Upsert";
+import Details from "./components/Details";
+
 import useUpdateEffect from "../../../hook/useUpdateEffect";
 import ModalDelete from "../../components/Modal/ModalDelete";
 
@@ -25,6 +27,7 @@ function Index() {
   const productList = useSelector((state) => state.productList);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detailsId, setDetailsId] = useState("");
 
   const [editId, setEditId] = useState("");
   const [deleteId, setDeleteId] = useState("");
@@ -52,7 +55,6 @@ function Index() {
   const handleOk = (values) => {
     const formData = new FormData();
     // values
-    console.log("🚀 ~ file: index.js:72 ~ handleOk ~ editId", editId);
 
     formData.append("name", values.name);
     formData.append("countInStock", values.countInStock);
@@ -98,6 +100,9 @@ function Index() {
     (_id) =>
     ({ key }) => {
       switch (key) {
+        case "view":
+          setDetailsId(_id);
+          break;
         case "edit":
           setEditId(_id);
           setIsModalOpen(true);
@@ -110,6 +115,10 @@ function Index() {
     };
 
   const items = [
+    {
+      label: "View",
+      key: "view",
+    },
     {
       label: "Edit",
       key: "edit",
@@ -263,6 +272,26 @@ function Index() {
             onFinish={handleOk}
             erorrs={upsertProduct}
             editId={editId}
+          />
+        </Modal>
+      )}
+      {detailsId && (
+        <Modal
+          title={<H1>Details Product</H1>}
+          open={!!detailsId}
+          onCancel={() => {
+            setDetailsId("");
+          }}
+          okText="Save"
+          cancelText="Cancel"
+          footer={false}
+          width="1000px"
+        >
+          <Details
+            onCancel={() => {
+              setDetailsId("");
+            }}
+            detailsId={detailsId}
           />
         </Modal>
       )}

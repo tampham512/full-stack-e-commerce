@@ -191,7 +191,6 @@ const Profile = ({ history }) => {
               </div>
             </div>
           </Wrapper>
-          <Profile></Profile>
         </>
       )}
     </div>
