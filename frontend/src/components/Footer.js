@@ -37,7 +37,7 @@ const footerList = [
 ];
 
 const copyright =
-  "Copyright © 2022 HasThemes | Built with Beshop by HasThemes.";
+  "Copyright © 2022 Balo3T | Built with Beshop by Balo3T.";
 
 const Footer = () => {
   return (
