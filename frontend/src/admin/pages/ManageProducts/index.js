@@ -94,7 +94,7 @@ function Index() {
     dispatch(listProducts());
   }, []);
 
-  const handleClickAction =
+/*   const handleClickAction =
     (_id) =>
     ({ key }) => {
       switch (key) {
@@ -107,9 +107,9 @@ function Index() {
           setIsModalDelete(true);
           break;
       }
-    };
+    }; */
 
-  const items = [
+/*   const items = [
     {
       label: "Edit",
       key: "edit",
@@ -211,10 +211,10 @@ function Index() {
         </Dropdown>
       ),
     },
-  ];
+  ]; */
 
   return (
-    <Box backgroundColor="#fff" padding="20px">
+/*     <Box backgroundColor="#fff" padding="20px">
       {contextHolder}
       <Box
         display="flex"
@@ -266,7 +266,8 @@ function Index() {
           />
         </Modal>
       )}
-    </Box>
+    </Box> */
+    <div>s</div>
   );
 }
 

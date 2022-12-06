@@ -169,7 +169,7 @@ const Routes = () => {
       />
       <ProtectedRoute
         typeLayout={TYPE_LAYOUT.CLIENT}
-        path="/list-product"
+        path="/category"
         component={ListProductScreen}
         exact
         roles={[]}

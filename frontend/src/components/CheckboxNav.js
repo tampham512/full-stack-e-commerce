@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 
-const CheckboxNav = ({ listCheck }) => {
+const CheckboxNav = ({ listCheck, ...props }) => {
   const type = "checkbox"; 
 
-  const handleChecked = (e, check) => {
-    console.log(check);
+  const onChange = (e) => {
+    console.log(e);
   };
+
   return (
     <div
       style={{
@@ -53,7 +54,7 @@ const CheckboxNav = ({ listCheck }) => {
                 key={index}
                 disabled={i.disabled}
                 type={type}
-                onClick={(e) => handleChecked(e, i.value)}
+                onChange={onChange}
                 id={`default-${type}`}
                 label={`${i.name}`}
               />

@@ -10,7 +10,7 @@ import Authorization from "../hook/Authorization";
 import { RolesEnums } from "../routes/ProtectedRoute";
 import history from "../utils/history";
 import "../styles/header.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import { Avatar, Badge, Space } from "antd";
 
@@ -52,8 +52,12 @@ const Header = () => {
             <i className="bx bx-chevron-down"></i>
           </NavLink>
           <ul className="nav-child">
-            <li className="nav-child-items">home 1</li>
-            <li className="nav-child-items">home 2</li>
+            <Link to="category">
+              <li className="nav-child-items">home 1</li>
+            </Link>
+            <Link to="category">
+              <li className="nav-child-items">home 2</li>
+            </Link>
           </ul>
         </li>
         <li className="header-nav-items">
@@ -62,8 +66,8 @@ const Header = () => {
             <i className="bx bx-chevron-down"></i>
           </NavLink>
           <ul className="nav-child">
-            <li className="nav-child-items">home 1</li>
-            <li className="nav-child-items">home 2</li>
+            <li className="nav-child-items">Category </li>
+            <li className="nav-child-items">Category </li>
           </ul>
         </li>
         <li className="header-nav-items">
@@ -72,8 +76,8 @@ const Header = () => {
             <i className="bx bx-chevron-down"></i>
           </NavLink>
           <ul className="nav-child">
-            <li className="nav-child-items">home 1</li>
-            <li className="nav-child-items">home 2</li>
+            <li className="nav-child-items">Category </li>
+            <li className="nav-child-items">Category </li>
           </ul>
         </li>
         <li className="header-nav-items">

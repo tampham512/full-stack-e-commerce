@@ -89,7 +89,7 @@ function Index() {
     },
   ];
 
-  const columns = [
+  /* const columns = [
     {
       title: "ID",
       dataIndex: "_id",
@@ -180,7 +180,7 @@ function Index() {
         );
       },
     },
-  ];
+  ]; */
   return (
     <Box backgroundColor="#fff" padding="20px">
       {contextHolder}
@@ -190,7 +190,7 @@ function Index() {
         </Box>
       </Box>
 
-      <Table columns={columns} dataSource={orderList?.data?.data} />
+      {/* <Table columns={columns} dataSource={orderList?.data?.data} />
       {isModalOpen && (
         <Modal
           title={<H1>Order Details</H1>}
@@ -203,7 +203,7 @@ function Index() {
         >
           <Details onCancel={handleCancel} editId={editId} />
         </Modal>
-      )}
+      )} */}
     </Box>
   );
 }
