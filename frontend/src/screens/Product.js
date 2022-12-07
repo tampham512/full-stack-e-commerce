@@ -38,15 +38,14 @@ const ProductScreen = ({ history, match }) => {
     // Dispatch the list products action and fill our state
     dispatch(listProducts());
   }, [dispatch]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
   const [qty, setQty] = useState(1);
   const productDetails = useSelector((state) => state.productDetails);
   const { loadingDetail, errorDetail, product } = productDetails;
 
   useEffect(() => {
     dispatch(listProductDetails(match.params.id));
+    window.scrollTo(0, 0);
   }, [dispatch, match]);
 
   const addToCartHandler = () => {

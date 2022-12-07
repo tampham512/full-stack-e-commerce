@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/styles/main.css";
 import "../assets/styles/responsive.css";
 import {
@@ -35,6 +35,11 @@ import team2 from "../assets/images/team-2.jpg";
 import team3 from "../assets/images/team-3.jpg";
 import team4 from "../assets/images/team-4.jpg";
 import card from "../assets/images/info-card-1.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../../actions/productActions";
+import { getUsersCustomer } from "../../actions/userActions";
+import { getOrders } from "../../actions/orderActions";
+import "../../styles/manageHome.css";
 
 function Home() {
   const { Title, Text } = Typography;
@@ -42,6 +47,27 @@ function Home() {
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);
 
   const [reverse, setReverse] = useState(false);
+
+  const dispatch = useDispatch();
+  const productsList = useSelector((state) => state.productList);
+  const usersCusomter = useSelector((state) => state.usersAdmin);
+  const orderList = useSelector((state) => state.orderList);
+  const { products } = productsList;
+  const { user } = usersCusomter;
+  const newOrder = orderList?.data?.data?.filter(
+    (item) => item.isDelivered === true
+  );
+  const sortPrice = newOrder?.sort((a, b) => b.totalPrice - a.totalPrice);
+
+  const newSortPrice = sortPrice?.slice(0, 5);
+  console.log(newSortPrice);
+  const newTotal = newOrder?.reduce((acc, item) => acc + item.totalPrice, 0);
+  useEffect(() => {
+    // Dispatch the list products action and fill our state
+    dispatch(getUsersCustomer());
+    dispatch(getOrders());
+    dispatch(listProducts());
+  }, []);
 
   const dollor = [
     <svg
@@ -131,31 +157,34 @@ function Home() {
   ];
   const count = [
     {
-      today: "Today’s Sales",
-      title: "$53,000",
-      persent: "+30%",
+      today: "Total Products",
+      title: `${products.length} products`,
+      icon: cart,
+      bnb: "bnb2",
+    },
+    {
+      today: "Total Price",
+      title: `${newTotal === undefined ? "0 $" : `${newTotal} $`}`,
       icon: dollor,
       bnb: "bnb2",
     },
     {
-      today: "Today’s Users",
-      title: "3,200",
-      persent: "+20%",
+      today: "Clients",
+      title: `${
+        user?.data?.length === undefined
+          ? "0 clients"
+          : `${user?.data?.length} clients`
+      } `,
       icon: profile,
-      bnb: "bnb2",
     },
     {
-      today: "New Clients",
-      title: "+1,200",
-      persent: "-20%",
-      icon: heart,
-      bnb: "redtext",
-    },
-    {
-      today: "New Orders",
-      title: "$13,200",
-      persent: "10%",
-      icon: cart,
+      today: "Top 5 highest revenue",
+      title: newSortPrice?.map((item) => (
+        <p className="top-price">
+          {item?.orderItems[0]?.name}:<span> {item.totalPrice} $</span>
+        </p>
+      )),
+
       bnb: "bnb2",
     },
   ];
@@ -346,16 +375,24 @@ function Home() {
             >
               <Card bordered={false} className="criclebox ">
                 <div className="number">
-                  <Row align="middle" gutter={[24, 0]}>
+                  <Row
+                    align="middle"
+                    className={`${
+                      c.today === "Top 5 highest revenue" ? "homeBox" : ""
+                    }`}
+                    gutter={[24, 0]}
+                  >
                     <Col xs={18}>
                       <span>{c.today}</span>
                       <Title level={3}>
                         {c.title} <small className={c.bnb}>{c.persent}</small>
                       </Title>
                     </Col>
-                    <Col xs={6}>
-                      <div className="icon-box">{c.icon}</div>
-                    </Col>
+                    {c.today === "Top 5 highest revenue" ? undefined : (
+                      <Col xs={6}>
+                        <div className="icon-box">{c.icon}</div>
+                      </Col>
+                    )}
                   </Row>
                 </div>
               </Card>

@@ -1,7 +1,7 @@
 import { listProductDetails } from "../../../../actions/productActions";
 
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { Form, Input, Skeleton, Switch, Upload } from "antd";
+import { Form, Input, Rate, Skeleton, Switch, Upload } from "antd";
 import React, { useMemo } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import { getOrderDetails } from "../../../../actions/orderActions";
 import { Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import Message from "../../../../components/Message";
 import { Link } from "react-router-dom";
+import moment from "moment";
+import "../../../../styles/manageDetails.css";
 
 const { TextArea } = Input;
 function Upsert(props) {
@@ -39,7 +41,7 @@ function Upsert(props) {
     <Skeleton loading={!productDetails?.product}>
       <StyledUpsert>
         <Row>
-          <Col md={8}>
+          <Col>
             <ListGroup variant="flush">
               <ListGroup.Item>
                 {/* <h2>Shipping</h2> */}
@@ -78,56 +80,24 @@ function Upsert(props) {
                 ) : (
                   <ListGroup variant="flush">
                     {productDetails?.product?.reviews.map((item, index) => (
-                      <ListGroup.Item key={index}>
-                        <Row>
-                          <Col>{item.user.email}</Col>
-                          <Col>{item.comment}</Col>
-                          <Col>{item.rating}</Col>
-                        </Row>
-                      </ListGroup.Item>
+                      <div className="review-list" key={index}>
+                        <div className="review-items">
+                          <div>{item.user.name}</div>
+                          <Rate disabled defaultValue={item?.rating} />
+                          <p className="review-times">
+                            {moment(item.user.updatedAt)
+                              .subtract(10, "days")
+                              .calendar()}
+                          </p>
+                          <div className="review-comment">{item.comment}</div>
+                        </div>
+                      </div>
                     ))}
                   </ListGroup>
                 )}
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          {/* <Col md={4}>
-            <Card>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h2>Order Summary</h2>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Items</Col>
-                    <Col>${order.itemsPrice}</Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Shipping</Col>
-                    <Col>${order.shippingPrice}</Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Tax</Col>
-                    <Col>${order.taxPrice}</Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Total</Col>
-                    <Col>${order.totalPrice}</Col>
-                  </Row>
-                </ListGroup.Item>
-
-                <ListGroup.Item>
-                  {error && <Message variant="danger">{error}</Message>}
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
-          </Col> */}
         </Row>
 
         <Box className="footer-modal-form">
