@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 // Components
@@ -12,7 +12,8 @@ import { Checkbox } from "antd";
 const ListProduct = () => {
   const dispatch = useDispatch();
   const [inputCategory, setInputCategory] = useState();
-  const [productFilter, setProductFilter] = useState([]);
+  const [lang, setLang] = useState([]);
+  // const [productFilter, setProductFilter] = useState([]);
   // Grab the data from the state
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -31,27 +32,42 @@ const ListProduct = () => {
   }, [dispatch]);
 
   const onChange = (e) => {
-    setInputCategory(e.target.value);
+    const { value, checked } = e.target;
+
+    if (checked) {
+      // push selected value in list
+      setLang((prev) => [...prev, value]);
+    } else {
+      // remove unchecked value from the list
+      setLang((prev) => prev.filter((x) => x !== value));
+    }
   };
 
-  useEffect(() => {
-    setProductFilter(
-      products.filter((product) => product.category.name == inputCategory)
-    );
-  }, [inputCategory]);
+  const productFilter = useMemo(() => {
+    if (lang.length == 0) {
+      return products;
+    } else {
+      return products?.filter((product) =>
+        lang?.includes(product.category._id)
+      );
+    }
+  }, [lang, products]);
+
   console.log(productFilter);
+
   return (
     <>
       <div style={{ display: "flex" }}>
         <CheckboxNav listCheck={category} onChange={onChange} />
+
         <Row style={{ width: "75%" }} md={3}>
-          {(productFilter.length === 0 ? products : productFilter)?.map(
-            (product) => (
-              <Col key={product._id} sm>
-                <Product product={product} />
-              </Col>
-            )
-          )}
+          {productFilter?.length <= 0
+            ? "Empty list product!"
+            : productFilter?.map((product) => (
+                <Col key={product._id} sm>
+                  <Product product={product} />
+                </Col>
+              ))}
         </Row>
       </div>
     </>

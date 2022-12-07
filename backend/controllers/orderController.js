@@ -55,6 +55,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
         if (product) {
           product.countInStock = product.countInStock - item.qty;
+          product.qtySold = product.qtySold + item.qty;
+
           await product.save();
         }
       });

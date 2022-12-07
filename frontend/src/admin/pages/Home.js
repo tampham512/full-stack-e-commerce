@@ -40,6 +40,9 @@ import { listProducts } from "../../actions/productActions";
 import { getUsersCustomer } from "../../actions/userActions";
 import { getOrders } from "../../actions/orderActions";
 import "../../styles/manageHome.css";
+import { getCategory } from "../../actions/categoryActions";
+import { Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Home() {
   const { Title, Text } = Typography;
@@ -52,21 +55,43 @@ function Home() {
   const productsList = useSelector((state) => state.productList);
   const usersCusomter = useSelector((state) => state.usersAdmin);
   const orderList = useSelector((state) => state.orderList);
+  const categoryList = useSelector((state) => state.categoryList);
+
   const { products } = productsList;
+  console.log("🚀 ~ file: Home.js:59 ~ Home ~ products", products);
   const { user } = usersCusomter;
   const newOrder = orderList?.data?.data?.filter(
     (item) => item.isDelivered === true
   );
-  const sortPrice = newOrder?.sort((a, b) => b.totalPrice - a.totalPrice);
+  // const sortPrice = newOrder?.sort((a, b) => b.totalPrice - a.totalPrice);
 
-  const newSortPrice = sortPrice?.slice(0, 5);
-  console.log(newSortPrice);
+  const sortPriceProduct = products?.sort(
+    (a, b) => b.qtySold * b.totalPrice - a.qtySold * a.totalPrice
+  );
+  const newSortPriceProduct = sortPriceProduct?.slice(0, 5);
+  console.log(
+    "🚀 ~ file: Home.js:69 ~ Home ~ newSortPriceProduct",
+    newSortPriceProduct
+  );
+
+  const sortQtyProduct = products?.sort((a, b) => b.qtySold - a.qtySold);
+  const newSortQtyProduct = sortQtyProduct?.slice(0, 5);
+  console.log(
+    "🚀 ~ file: Home.js:76 ~ Home ~ newSortQtyProduct",
+    newSortQtyProduct
+  );
+
+  // const newSortPrice = sortPrice?.slice(0, 5);
+
   const newTotal = newOrder?.reduce((acc, item) => acc + item.totalPrice, 0);
+  const newqtySold = products?.reduce((acc, item) => acc + item.qtySold, 0);
+
   useEffect(() => {
     // Dispatch the list products action and fill our state
     dispatch(getUsersCustomer());
     dispatch(getOrders());
     dispatch(listProducts());
+    dispatch(getCategory());
   }, []);
 
   const dollor = [
@@ -158,7 +183,7 @@ function Home() {
   const count = [
     {
       today: "Total Products",
-      title: `${products.length} products`,
+      title: `${products?.length || 0} products`,
       icon: cart,
       bnb: "bnb2",
     },
@@ -172,21 +197,26 @@ function Home() {
       today: "Clients",
       title: `${
         user?.data?.length === undefined
-          ? "0 clients"
+          ? "0 Clients"
           : `${user?.data?.length} clients`
       } `,
       icon: profile,
     },
     {
-      today: "Top 5 highest revenue",
-      title: newSortPrice?.map((item) => (
-        <p className="top-price">
-          {item?.orderItems[0]?.name}:<span> {item.totalPrice} $</span>
-        </p>
-      )),
-
-      bnb: "bnb2",
+      today: "Sold Total",
+      title: `${newqtySold === undefined ? "0 Sold" : `${newqtySold} Sold`} `,
+      icon: cart,
     },
+    // {
+    //   today: "Top 5 highest revenue",
+    //   title: newSortPrice?.map((item) => (
+    //     <p className="top-price">
+    //       {item?.orderItems[0]?.name}:<span> {item.totalPrice} $</span>
+    //     </p>
+    //   )),
+
+    //   bnb: "bnb2",
+    // },
   ];
 
   const list = [
@@ -375,31 +405,17 @@ function Home() {
             >
               <Card bordered={false} className="criclebox ">
                 <div className="number">
-                  <Row
-                    align="middle"
-                    className={`${
-                      c.today === "Top 5 highest revenue" ? "homeBox" : ""
-                    }`}
-                    gutter={[24, 0]}
-                  >
-                    <Col
-                      xs={18}
-                      className={`${
-                        c.today === "Top 5 highest revenue"
-                          ? "homeBox-content"
-                          : ""
-                      }`}
-                    >
+                  <Row align="middle" gutter={[24, 0]}>
+                    <Col xs={18}>
                       <span>{c.today}</span>
-                      <Title level={3}>
+                      <Title level={5}>
                         {c.title} <small className={c.bnb}>{c.persent}</small>
                       </Title>
                     </Col>
-                    {c.today === "Top 5 highest revenue" ? undefined : (
-                      <Col xs={6}>
-                        <div className="icon-box">{c.icon}</div>
-                      </Col>
-                    )}
+
+                    <Col xs={6}>
+                      <div className="icon-box">{c.icon}</div>
+                    </Col>
                   </Row>
                 </div>
               </Card>
@@ -408,14 +424,50 @@ function Home() {
         </Row>
 
         <Row gutter={[24, 0]}>
-          <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
+          <Col span={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              {/* <Echart /> */}
+              <Title level={4}>Top 5 highest revenue</Title>
+              <Row gutter={[0, 20]}>
+                {newSortPriceProduct?.map((item) => (
+                  <Row gutter={[8, 20]}>
+                    <Col span={6}>
+                      <Image
+                        src={`/images/${item?.image?.[0]?.src}`}
+                        alt={item.name}
+                        fluid
+                        rounded
+                      />
+                    </Col>
+                    <Col span={14}>
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    </Col>
+                    <Col md={4}>$ {item.qtySold * item.price}</Col>
+                  </Row>
+                ))}
+              </Row>
             </Card>
           </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
+          <Col span={12} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
-              {/* <LineChart /> */}
+              <Title level={4}>Top 5 best selling products</Title>
+              <Row gutter={[0, 20]}>
+                {newSortQtyProduct?.map((item) => (
+                  <Row gutter={[8, 20]}>
+                    <Col span={6}>
+                      <Image
+                        src={`/images/${item?.image?.[0]?.src}`}
+                        alt={item.name}
+                        fluid
+                        rounded
+                      />
+                    </Col>
+                    <Col span={14}>
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    </Col>
+                    <Col md={4}>{item.qtySold}</Col>
+                  </Row>
+                ))}
+              </Row>
             </Card>
           </Col>
         </Row>

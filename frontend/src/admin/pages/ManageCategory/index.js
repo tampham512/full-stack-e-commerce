@@ -121,8 +121,8 @@ function Index() {
       isSearch: true,
       width: "20%",
       render: (record) => record?.substring(0, 10),
-      sorter: (a, b) => a.createdAt.length - b.createdAt.length,
-      sortDirections: ["descend", "ascend", "descend"],
+      // sorter: (a, b) => a.createdAt.length - b.createdAt.length,
+      // sortDirections: ["descend", "ascend", "descend"],
     },
 
     {

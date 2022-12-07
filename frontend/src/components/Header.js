@@ -120,7 +120,7 @@ const Header = () => {
                 roles={[RolesEnums.get("ADMIN")]}
                 type="ifAnyGranted"
               >
-                <LinkContainer to="/admin">
+                <LinkContainer to="/admin/dashboard">
                   <NavDropdown.Item>Admin</NavDropdown.Item>
                 </LinkContainer>
               </Authorization>

@@ -55,7 +55,7 @@ const CheckboxNav = (props) => {
               <Form.Check
                 key={index}
                 onChange={props.onChange}
-                value={i.name}
+                value={i._id}
                 type={type}
                 label={`${i.name}`}
               />

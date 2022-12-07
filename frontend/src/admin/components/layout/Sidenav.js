@@ -158,12 +158,15 @@ function Sidenav({ color }) {
       </Box>
       <hr />
       <Menu theme="light" mode="inline">
-        <Menu.Item key="1" className={pathname === "/admin" ? "active" : ""}>
-          <NavLink to="/admin/">
+        <Menu.Item
+          key="1"
+          className={pathname === "/admin/dashboard" ? "active" : ""}
+        >
+          <NavLink to="/admin/dashboard">
             <span
               className="icon"
               style={{
-                background: pathname === "/admin" ? color : "",
+                background: pathname === "/admin/dashboard" ? color : "",
               }}
             >
               {dashboard}
@@ -239,9 +242,10 @@ function Sidenav({ color }) {
             <span className="label">Order</span>
           </NavLink>
         </Menu.Item>
- {/*        <Menu.Item className="menu-item-header" key="5">
+        {/*        <Menu.Item className="menu-item-header" key="5">
           Account Pages
-        </Menu.Item> */}{/* 
+        </Menu.Item> */}
+        {/* 
         <Menu.Item key="6">
           <NavLink to="/admin/order">
             <span
