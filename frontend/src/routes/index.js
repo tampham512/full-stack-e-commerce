@@ -64,7 +64,7 @@ const Routes = () => {
       />
       <ProtectedRoute
         typeLayout={TYPE_LAYOUT.DASHBOARD}
-        path="/admin"
+        path="/admin/dashboard"
         roles={[RolesEnums.get("ADMIN")]}
         component={HomeAdmin}
         exact
