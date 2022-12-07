@@ -382,7 +382,14 @@ function Home() {
                     }`}
                     gutter={[24, 0]}
                   >
-                    <Col xs={18}>
+                    <Col
+                      xs={18}
+                      className={`${
+                        c.today === "Top 5 highest revenue"
+                          ? "homeBox-content"
+                          : ""
+                      }`}
+                    >
                       <span>{c.today}</span>
                       <Title level={3}>
                         {c.title} <small className={c.bnb}>{c.persent}</small>

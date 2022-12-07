@@ -16,8 +16,7 @@
 .homeBox {
   display: inline-block;
 }
-.homeBox :where(.css-dev-only-do-not-override-19g5zt5).ant-col-xs-18 {
-  display: block;
-
-  max-width: 100%;
+.homeBox .homeBox-content {
+  display: block !important;
+  max-width: 100% !important;
 }
