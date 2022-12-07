@@ -22,6 +22,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import styled from "styled-components";
 import Product from "../components/Product";
+import Review from "../components/Review";
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ const ProductScreen = ({ history, match }) => {
       setQty(qty + 1);
     }
   };
+  console.log(product);
   return (
     <>
       <Link className="btn btn-secondary my-3" to="/">
@@ -121,7 +123,10 @@ const ProductScreen = ({ history, match }) => {
           </Wrapper>
           <Row>
             <>
-              <div className="advertise-product" style={{marginBottom:"-20px"}}>
+              <div
+                className="advertise-product"
+                style={{ marginBottom: "-20px" }}
+              >
                 <div>
                   <h3>RELATED PRODUCTS</h3>
                 </div>
@@ -137,7 +142,10 @@ const ProductScreen = ({ history, match }) => {
           </Row>
           <Row>
             <>
-              <div className="advertise-product" style={{marginBottom:"-20px"}}>
+              <div
+                className="advertise-product"
+                style={{ marginBottom: "-20px" }}
+              >
                 <h3>CUSTOM COLLECTION</h3>
               </div>
               <Row md={4}>
@@ -148,6 +156,9 @@ const ProductScreen = ({ history, match }) => {
                 ))}
               </Row>
             </>
+          </Row>
+          <Row>
+            <Review data={product?.review} />
           </Row>
         </>
       )}
