@@ -67,6 +67,11 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    qtySold: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     status: {
       type: Number,
       required: true,

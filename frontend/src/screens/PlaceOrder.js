@@ -45,10 +45,12 @@ const PlaceOrder = ({ history }) => {
 
   useEffect(() => {
     if (success) {
+      localStorage.removeItem("cartItems");
       history.push(`/order/${order._id}`);
+
       dispatch({ type: ORDER_CREATE_RESET });
       dispatch({ type: USER_DETAILS_RESET });
-      localStorage.setItem("cartItems", []);
+      window.location.reload();
     }
     // eslint-disable-next-line
   }, [history, success]);
