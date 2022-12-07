@@ -51,34 +51,34 @@ const Header = () => {
             Home
             <i className="bx bx-chevron-down"></i>
           </NavLink>
-          <ul className="nav-child">
-            <Link to="category">
-              <li className="nav-child-items">home 1</li>
+          {/* <ul className="nav-child">
+            <Link to="/">
+              <li className="nav-child-items">Home</li>
             </Link>
-            <Link to="category">
-              <li className="nav-child-items">home 2</li>
+            <Link to="/category">
+              <li className="nav-child-items">Category</li>
             </Link>
-          </ul>
+          </ul> */}
         </li>
         <li className="header-nav-items">
-          <NavLink className="item-links" to="/shop">
+          <NavLink className="item-links" to="/category">
             shop
             <i className="bx bx-chevron-down"></i>
           </NavLink>
-          <ul className="nav-child">
+          {/* <ul className="nav-child">
             <li className="nav-child-items">Category </li>
             <li className="nav-child-items">Category </li>
-          </ul>
+          </ul> */}
         </li>
         <li className="header-nav-items">
-          <NavLink className="item-links" to="/products">
+          <NavLink className="item-links" to="/category">
             products
             <i className="bx bx-chevron-down"></i>
           </NavLink>
-          <ul className="nav-child">
+          {/* <ul className="nav-child">
             <li className="nav-child-items">Category </li>
             <li className="nav-child-items">Category </li>
-          </ul>
+          </ul> */}
         </li>
         <li className="header-nav-items">
           <NavLink className="item-links" to="/blog">
