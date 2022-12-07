@@ -4,9 +4,6 @@ import Form from "react-bootstrap/Form";
 const CheckboxNav = ({ listCheck, ...props }) => {
   const type = "checkbox"; 
 
-  const onChange = (e) => {
-    console.log(e);
-  };
 
   return (
     <div
@@ -53,8 +50,7 @@ const CheckboxNav = ({ listCheck, ...props }) => {
               <Form.Check
                 key={index}
                 disabled={i.disabled}
-                type={type}
-                onChange={onChange}
+                type={type} 
                 id={`default-${type}`}
                 label={`${i.name}`}
               />

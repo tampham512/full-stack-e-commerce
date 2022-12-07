@@ -54,7 +54,7 @@ const ListProduct = () => {
       </Col>
     ));
    const onChangeListCheck =(values)=>{
-      console.log(values)
+      console.log(12)
     }
    
   return (

@@ -24,6 +24,7 @@ import styled from "styled-components";
 import Product from "../components/Product";
 import "../styles/products.css";
 import "../styles/product.css";
+import Review from "../components/Review";
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -159,6 +160,7 @@ const ProductScreen = ({ history, match }) => {
               ))}
             </div>
           </div>
+          <Review data={product?.reviews}/>
         </>
       )}
     </>
