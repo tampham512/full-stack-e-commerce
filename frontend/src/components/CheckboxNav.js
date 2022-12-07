@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 
-const CheckboxNav = ({ listCheck, ...props }) => {
-  const type = "checkbox"; 
+const available = [
+  {
+    title: "out of stock",
+    value: "out_of_stock",
+  },
+];
 
+const CheckboxNav = (props) => {
+  const type = "checkbox";
 
   return (
     <div
       style={{
         padding: "20px",
-
         width: "25%",
       }}
     >
@@ -22,7 +27,7 @@ const CheckboxNav = ({ listCheck, ...props }) => {
         }}
         className="mb-3"
       >
-        {listCheck.map((checkbox, index) => (
+        {available.map((checkbox, index) => (
           <div
             key={index}
             style={{
@@ -31,7 +36,7 @@ const CheckboxNav = ({ listCheck, ...props }) => {
           >
             <h4
               style={{
-                background: "#fff none repeat scroll 0 0",
+                background: "#fff none repeat 0 0",
                 color: " #000",
                 display: " block",
                 borderLeft: "1px solid #000",
@@ -44,14 +49,14 @@ const CheckboxNav = ({ listCheck, ...props }) => {
                 textTransform: " uppercase",
               }}
             >
-              {checkbox.title}
+              AVAILABLE
             </h4>
-            {checkbox.list.map((i, index) => (
+            {props?.listCheck?.map((i, index) => (
               <Form.Check
                 key={index}
-                disabled={i.disabled}
-                type={type} 
-                id={`default-${type}`}
+                onChange={props.onChange}
+                value={i.name}
+                type={type}
                 label={`${i.name}`}
               />
             ))}

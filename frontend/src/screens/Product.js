@@ -86,7 +86,7 @@ const ProductScreen = ({ history, match }) => {
             <div className="products-content">
               <h3 className="products-content-name">{product.name}</h3>
               <div className="products-content-info">
-                <Rate disabled defaultValue={product?.rating} />
+                <Rate disabled value={product?.rating} />{" "} 
               </div>
               <span className="price">${product.price}</span>
               <div className="describe">
@@ -160,7 +160,7 @@ const ProductScreen = ({ history, match }) => {
               ))}
             </div>
           </div>
-          <Review data={product?.reviews}/>
+          <Review data={product?.reviews} />
         </>
       )}
     </>

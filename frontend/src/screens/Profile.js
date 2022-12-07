@@ -76,7 +76,7 @@ const Profile = ({ history }) => {
         <>
           <Wrapper>
             <div>
-              <h1>My profile</h1>
+              <h1>{name}</h1>
               <hr className="small-hr" />
 
               <h4>Order history</h4>
@@ -135,11 +135,9 @@ const Profile = ({ history }) => {
             </div>
             <hr className="small-hr" />
             <div>
-              <h4>Account details</h4>
-              <h5>Tony bui</h5>
+              <h4>Account details</h4> 
               <div>
-                <div>
-                  <h2>User Profile</h2>
+                <div> 
                   {error && <Message variant="danger">{error}</Message>}
                   {message && <Message variant="danger">{message}</Message>}
                   {success && (
@@ -151,7 +149,7 @@ const Profile = ({ history }) => {
                       <Form.Label>Name</Form.Label>
                       <Form.Control
                         type="text"
-                        placeholder="Name"
+                        placeholder="Enter name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                       ></Form.Control>
@@ -160,7 +158,7 @@ const Profile = ({ history }) => {
                       <Form.Label>Email Address</Form.Label>
                       <Form.Control
                         type="email"
-                        placeholder="email@example.com"
+                        placeholder="Enter email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       ></Form.Control>
