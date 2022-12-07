@@ -89,7 +89,7 @@ function Index() {
     },
   ];
 
-  /* const columns = [
+  const columns = [
     {
       title: "ID",
       dataIndex: "_id",
@@ -104,8 +104,8 @@ function Index() {
       width: "25%",
       isSearch: true,
       render: (_, record) => record?.user?.name,
-      sorter: (a, b) => a?.user?.name?.localeCompare(b?.user?.name),
-      sortDirections: ["descend", "ascend", "descend"],
+      // sorter: (a, b) => a?.user?.name?.localeCompare(b?.user?.name),
+      // sortDirections: ["descend", "ascend", "descend"],
     },
     {
       title: "Email",
@@ -114,16 +114,16 @@ function Index() {
       width: "25%",
       isSearch: true,
       render: (_, record) => record?.user?.email,
-      sorter: (a, b) => a?.user?.email?.localeCompare(b?.user?.email),
-      sortDirections: ["descend", "ascend", "descend"],
+      // sorter: (a, b) => a?.user?.email?.localeCompare(b?.user?.email),
+      // sortDirections: ["descend", "ascend", "descend"],
     },
     {
       title: "Total Price",
       dataIndex: "totalPrice",
       key: "slug",
       width: "20%",
-      sorter: (a, b) => Number(a.totalPrice) - Number(b.totalPrice),
-      sortDirections: ["descend", "ascend", "descend"],
+      // sorter: (a, b) => Number(a.totalPrice) - Number(b.totalPrice),
+      // sortDirections: ["descend", "ascend", "descend"],
 
       isSearch: true,
     },
@@ -134,8 +134,8 @@ function Index() {
       // isSearch: true,
       width: "20%",
       render: (_, record) => record?.updatedAt.substring(0, 10),
-      sorter: (a, b) => a.updatedAt?.localeCompare(b.updatedAt),
-      sortDirections: ["descend", "ascend", "descend"],
+      // sorter: (a, b) => a.updatedAt?.localeCompare(b.updatedAt),
+      // sortDirections: ["descend", "ascend", "descend"],
     },
 
     {
@@ -180,7 +180,7 @@ function Index() {
         );
       },
     },
-  ]; */
+  ];
   return (
     <Box backgroundColor="#fff" padding="20px">
       {contextHolder}
@@ -190,7 +190,7 @@ function Index() {
         </Box>
       </Box>
 
-      {/* <Table columns={columns} dataSource={orderList?.data?.data} />
+      <Table columns={columns} dataSource={orderList?.data?.data} />
       {isModalOpen && (
         <Modal
           title={<H1>Order Details</H1>}
@@ -203,7 +203,7 @@ function Index() {
         >
           <Details onCancel={handleCancel} editId={editId} />
         </Modal>
-      )} */}
+      )}
     </Box>
   );
 }
