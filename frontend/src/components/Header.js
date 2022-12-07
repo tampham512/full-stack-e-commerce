@@ -37,9 +37,9 @@ const Header = () => {
   const { cartItems } = cart;
   const handleShowSearch = () => {
     setShow(!show);
-    console.log(show);
   };
   useOnClickOutside(ref, () => setShow(false));
+
   return (
     <Navbar className="header" variant="dark" expand="lg" collapseOnSelect>
       <LinkContainer to="/">

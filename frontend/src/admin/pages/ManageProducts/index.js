@@ -142,8 +142,8 @@ function Index() {
       dataIndex: "name",
       key: "name",
       width: "30%",
-      render: (_, record) => record?.category?.name,
-      sorter: (a, b) => a?.category?.name.localeCompare(b?.category?.name),
+      // render: (_, record) => record?.category?.name,
+      // sorter: (a, b) => a?.category?.name.localeCompare(b?.category?.name),
 
       sortDirections: ["descend", "ascend", "descend"],
     },
@@ -223,7 +223,7 @@ function Index() {
   ];
 
   return (
-     <Box backgroundColor="#fff" padding="20px">
+    <Box backgroundColor="#fff" padding="20px">
       {contextHolder}
       <Box
         display="flex"

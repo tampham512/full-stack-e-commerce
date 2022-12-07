@@ -50,14 +50,20 @@ function Upsert(props) {
                   {productDetails?.product.name}
                 </p>
                 <p>
-                  <strong>Email: </strong>
-                  {/* {order.user.email} */}
+                  <strong>Category: </strong>
+                  {productDetails?.product?.category?.name}
                 </p>
                 <p>
-                  <strong>Address: </strong>
-                  {/* {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
-                  {order.shippingAddress.postalCode},{" "}
-                  {order.shippingAddress.country} */}
+                  <strong>Description: </strong>
+                  {productDetails?.product?.description}
+                </p>
+                <p>
+                  <strong>Price: </strong>
+                  {productDetails?.product?.price} $
+                </p>
+                <p>
+                  <strong>CountInStock: </strong>
+                  {productDetails?.product?.countInStock}
                 </p>
               </ListGroup.Item>
               <ListGroup.Item>
